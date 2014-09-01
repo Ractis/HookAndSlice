@@ -1,0 +1,39 @@
+"ItemPool_Boots"
+{
+	"item_slippers"
+	{
+		"Type"	"Boots"
+		"Cost"	"150"
+		"Properties"
+		{
+			"Agi"	"2 4"
+		}
+	}
+	"item_boots_of_elves"
+	{
+		"Type"	"Boots"
+		"Cost"	"450"
+		"Properties"
+		{
+			"Agi"	"3 9"
+		}
+	}
+	"item_boots"
+	{
+		"Type"	"Boots"
+		"Cost"	"450"
+		"Properties"
+		{
+			"MS"	"40 60"
+		}
+	}
+	"item_travel_boots"
+	{
+		"Type"	"Boots"
+		"Cost"	"2450"
+		"Properties"
+		{
+			"MS"	"85 115"
+		}
+	}
+}

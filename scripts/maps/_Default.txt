@@ -1,0 +1,29 @@
+"_Default"
+{
+	"DefaultCooldownReduction"		"50"	// [%]
+	"DefaultAdditionalHPRegen"		"2.5"	// [Per second]
+	"DefaultAdditionalManaRegen"	"5.0"	// [Per second]
+	
+	"StartSafeZoneDistance"			"2000"	// [units]
+	"EnemySpawnDistance"			"2500"	// [units]
+	"HordeSpawnDistance"			"2500"	// [units]
+	"HordeIntervalMin"				"75"	// [sec]
+	"HordeIntervalMax"				"95"	// [sec]
+	"HordeGroupMin"					"3"
+	"HordeGroupMax"					"3"
+	"HordeSizeMin"					"10"
+	"HordeSizeMax"					"16"
+	"DirectorRelaxedTimeMin"		"15"
+	"DirectorRelaxedTimeMax"		"25"
+	"DirectorPeakTimeMin"			"1"
+	"DirectorPeakTimeMax"			"3"
+	"IntensityScale"				"0.2"
+	"IntensityDecayTime"			"20"	// [sec] Seconds to decay full intensity to zero
+	"IntensityInhibitDecay"			"3.5"	// [sec] Seconds before intensity starts to decay after an increase
+	"IntensityFarRange"				"600"	// [units] Enemies killed past this distance will only slightly increase intensity
+	
+	"RareMonsterChance"				"15"	// [%]
+	"MythicalMonsterChance"			"3"		// [%]
+	
+	"ExpMultiplier"					"2"
+}

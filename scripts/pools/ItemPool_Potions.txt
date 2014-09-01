@@ -1,0 +1,13 @@
+"ItemPool_Potions"
+{
+	"item_flask"
+	{
+		"Type"		"Potion"
+		"Weight"	"75"
+	}
+	"item_greater_clarity"
+	{
+		"Type"		"Potion"
+		"Weight"	"25"
+	}
+}

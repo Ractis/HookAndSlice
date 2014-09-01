@@ -1,0 +1,5 @@
+"AbilityPool_MonsterRare"
+{
+	"dotarpg_haste"		{ }
+	"dotarpg_regen"		{ }
+}

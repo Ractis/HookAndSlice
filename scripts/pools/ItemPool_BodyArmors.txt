@@ -1,0 +1,48 @@
+"ItemPool_BodyArmors"
+{
+	"item_mantle"
+	{
+		"Type"	"Body"
+		"Cost"	"150"
+		"Properties"
+		{
+			"Int"	"2 4"
+		}
+	}
+	"item_robe"
+	{
+		"Type"	"Body"
+		"Cost"	"450"
+		"Properties"
+		{
+			"Int"	"3 9"
+		}
+	}
+	"item_chainmail"
+	{
+		"Type"	"Body"
+		"Cost"	"550"
+		"Properties"
+		{
+			"Armor"	"3 7"
+		}
+	}
+	"item_cloak"
+	{
+		"Type"	"Body"
+		"Cost"	"550"
+		"Properties"
+		{
+			"MR"	"10 20"
+		}
+	}
+	"item_platemail"
+	{
+		"Type"	"Body"
+		"Cost"	"1400"
+		"Properties"
+		{
+			"Armor"	"7 13"
+		}
+	}
+}

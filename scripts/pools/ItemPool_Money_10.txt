@@ -1,0 +1,9 @@
+"ItemPool_Money_10"
+{
+	"item_bag_of_gold"
+	{
+		"Weight"	"100"
+		"Charges"	"7 13"
+		"EnableAutoPickup"	"1"
+	}
+}

@@ -1,0 +1,17 @@
+"AllItemDefinitions"
+{
+	"ListDef_DefaultLoot"
+	{
+		"Type"	"ListDef"
+	}
+	
+	"ItemPool_Gears" 		{}
+	"ItemPool_Weapons" 		{}
+	"ItemPool_Helmets" 		{}
+	"ItemPool_BodyArmors" 	{}
+	"ItemPool_Boots" 		{}
+	"ItemPool_Accessories" 	{}
+	"ItemPool_Potions" 		{}
+	"ItemPool_Consumables"	{}
+	"ItemPool_Money_10" 	{}
+}

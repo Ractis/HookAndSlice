@@ -1,0 +1,19 @@
+"ListDef_DefaultLoot"
+{
+	"ItemPool_Gears"
+	{
+		"Chance"	"25"
+	}
+	"ItemPool_Potions"
+	{
+		"Chance"	"20"
+	}
+	"ItemPool_Consumables"
+	{
+		"Chance"	"20"
+	}
+	"ItemPool_Money_10"
+	{
+		"Chance"	"30"
+	}
+}

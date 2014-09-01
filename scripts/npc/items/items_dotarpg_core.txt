@@ -1,0 +1,28 @@
+	//=================================================================================================================
+	// DotaRPG : Inventory
+	//=================================================================================================================
+	"item_dotarpg_inventory"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"item_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"	"item_dotarpg_inventory"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemPurchasable"	"0"
+		"ItemDroppable"		"0"
+		"ItemSellable"		"0"
+		"ItemKillable"		"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"Target" 		"CASTER"
+				"ScriptFile"	"scripts/vscripts/CustomItemScript.lua"
+				"Function"		"ToggleInventory"
+			}
+		}
+	}

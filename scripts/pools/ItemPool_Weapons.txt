@@ -1,0 +1,155 @@
+"ItemPool_Weapons"
+{
+	"item_branches"
+	{
+		"Type"	"Weapon"
+		"Cost"	"50"
+		"Properties"
+		{
+			"Str"	"1 1"
+			"Agi"	"1 1"
+			"Int"	"1 1"
+		}
+	}
+	"item_blades_of_attack"
+	{
+		"Type"	"Weapon"
+		"Cost"	"450"
+		"Properties"
+		{
+			"Damage"	"5 13"
+		}
+	}
+	"item_quarterstaff"
+	{
+		"Type"	"Weapon"
+		"Cost"	"900"
+		"Properties"
+		{
+			"Damage"	"7 13"
+			"AS"	"7 13"
+		}
+	}
+	"item_ogre_axe"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1000"
+		"Properties"
+		{
+			"Str"	"7 13"
+		}
+	}
+	"item_blade_of_alacrity"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1000"
+		"Properties"
+		{
+			"Agi"	"7 13"
+		}
+	}
+	"item_staff_of_wizardry"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1000"
+		"Properties"
+		{
+			"Int"	"7 13"
+		}
+	}
+	"item_broadsword"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1200"
+		"Properties"
+		{
+			"Damage"	"14 22"
+		}
+	}
+	"item_claymore"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1400"
+		"Properties"
+		{
+			"Damage"	"16 26"
+		}
+	}
+	"item_mithril_hammer"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1600"
+		"Properties"
+		{
+			"Damage"	"18 30"
+		}
+	}
+	"item_oblivion_staff"
+	{
+		"Type"	"Weapon"
+		"Cost"	"1675"
+		"Properties"
+		{
+			"Int"	"4 8"
+			"ManaReg"	"60 90"
+			"Damage"	"10 20"
+			"AS"	"7 13"
+		}
+	}
+	"item_yasha"
+	{
+		"Type"	"Weapon"
+		"Cost"	"2050"
+		"Properties"
+		{
+			"Agi"	"11 21"
+			"AS"	"11 19"
+			"MSPct"	"7 13"
+		}
+	}
+	"item_demon_edge"
+	{
+		"Type"	"Weapon"
+		"Cost"	"2400"
+		"Properties"
+		{
+			"Damage"	"34 58"
+		}
+	}
+	"item_mystic_staff"
+	{
+		"Type"	"Weapon"
+		"Cost"	"2700"
+		"Properties"
+		{
+			"Int"	"17 33"
+		}
+	}
+	"item_reaver"
+	{
+		"Type"	"Weapon"
+		"Cost"	"3200"
+		"Properties"
+		{
+			"Str"	"17 33"
+		}
+	}
+	"item_relic"
+	{
+		"Type"	"Weapon"
+		"Cost"	"3800"
+		"Properties"
+		{
+			"Damage"	"45 75"
+		}
+	}
+	"item_rapier"
+	{
+		"Type"	"Weapon"
+		"Cost"	"6200"
+		"Properties"
+		{
+			"Damage"	"267 333"
+		}
+	}
+}

@@ -1,0 +1,170 @@
+"ItemPool_Accessories"
+{
+	"item_gauntlets"
+	{
+		"Type"	"Gloves"
+		"Cost"	"150"
+		"Properties"
+		{
+			"Str"	"2 4"
+		}
+	}
+	"item_ring_of_protection"
+	{
+		"Type"	"Accessory"
+		"Cost"	"175"
+		"Properties"
+		{
+			"Armor"	"1 3"
+		}
+	}
+	"item_ring_of_regen"
+	{
+		"Type"	"Accessory"
+		"Cost"	"350"
+		"Properties"
+		{
+			"HPReg"	"1 3"
+		}
+	}
+	"item_belt_of_strength"
+	{
+		"Type"	"Accessory"
+		"Cost"	"450"
+		"Properties"
+		{
+			"Str"	"3 9"
+		}
+	}
+	"item_null_talisman"
+	{
+		"Type"	"Accessory"
+		"Cost"	"470"
+		"Properties"
+		{
+			"Str"	"2 4"
+			"Agi"	"2 4"
+			"Int"	"4 8"
+			"Damage"	"2 4"
+		}
+	}
+	"item_gloves"
+	{
+		"Type"	"Gloves"
+		"Cost"	"500"
+		"Properties"
+		{
+			"AS"	"10 20"
+		}
+	}
+	"item_bracer"
+	{
+		"Type"	"Gloves"
+		"Cost"	"525"
+		"Properties"
+		{
+			"Str"	"4 8"
+			"Agi"	"2 4"
+			"Int"	"2 4"
+			"Damage"	"2 4"
+		}
+	}
+	"item_ring_of_health"
+	{
+		"Type"	"Accessory"
+		"Cost"	"875"
+		"Properties"
+		{
+			"HPReg"	"3 7"
+		}
+	}
+	"item_void_stone"
+	{
+		"Type"	"Accessory"
+		"Cost"	"875"
+		"Properties"
+		{
+			"ManaReg"	"85 115"
+		}
+	}
+	"item_energy_booster"
+	{
+		"Type"	"Accessory"
+		"Cost"	"1000"
+		"Properties"
+		{
+			"Mana"	"230 270"
+		}
+	}
+	"item_vitality_booster"
+	{
+		"Type"	"Accessory"
+		"Cost"	"1100"
+		"Properties"
+		{
+			"HP"	"230 270"
+		}
+	}
+	"item_point_booster"
+	{
+		"Type"	"Accessory"
+		"Cost"	"1200"
+		"Properties"
+		{
+			"HP"	"180 220"
+			"Mana"	"135 165"
+		}
+	}
+	"item_pers"
+	{
+		"Type"	"Accessory"
+		"Cost"	"1750"
+		"Properties"
+		{
+			"HPReg"	"3 7"
+			"ManaReg"	"105 145"
+			"Damage"	"7 13"
+		}
+	}
+	"item_hyperstone"
+	{
+		"Type"	"Accessory"
+		"Cost"	"2000"
+		"Properties"
+		{
+			"AS"	"40 70"
+		}
+	}
+	"item_ultimate_orb"
+	{
+		"Type"	"Accessory"
+		"Cost"	"2100"
+		"Properties"
+		{
+			"Str"	"7 13"
+			"Agi"	"7 13"
+			"Int"	"7 13"
+		}
+	}
+	"item_eagle"
+	{
+		"Type"	"LargeAccessory"
+		"Cost"	"3300"
+		"Properties"
+		{
+			"Agi"	"17 33"
+		}
+	}
+	"item_soul_booster"
+	{
+		"Type"	"Accessory"
+		"Cost"	"3300"
+		"Properties"
+		{
+			"HP"	"410 490"
+			"Mana"	"360 440"
+			"HPReg"	"3 5"
+			"ManaReg"	"85 115"
+		}
+	}
+}

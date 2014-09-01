@@ -1,0 +1,13 @@
+"ItemPool_Consumables"
+{
+	"item_dotarpg_smoke_of_haste"
+	{
+		"Type"		"Potion"
+		"Weight"	"100"
+	}
+	"item_dotarpg_smoke_of_bkb"
+	{
+		"Type"		"Potion"
+		"Weight"	"50"
+	}
+}

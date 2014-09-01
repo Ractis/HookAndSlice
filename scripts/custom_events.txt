@@ -1,0 +1,80 @@
+// No spaces in event names, max length 32
+// All strings are case sensitive
+//
+// valid data key types are:
+//   string : a zero terminated string
+//   bool   : unsigned int, 1 bit
+//   byte   : unsigned int, 8 bit
+//   short  : signed int, 16 bit
+//   long   : signed int, 32 bit
+//   float  : float, 32 bit
+//   uint64 : unsigned int 64 bit
+//   local  : any data, but not networked to clients
+//
+// following key names are reserved:
+//   local      : if set to 1, event is not networked to clients
+//   unreliable : networked, but unreliable
+//   suppress   : never fire this event
+//   time	: firing server time
+//   eventid	: holds the event ID
+
+"CustomEvents"
+{
+	"dotarpg_pickedup_item"
+	{
+		"playerID"			"short"
+		"itemID"			"long"
+		"itemName"			"string"
+		"itemCategory"		"string"
+		"itemLevel"			"short"
+		"itemRarity"		"short"
+		"itemCharges"		"short"
+		"itemBaseProperties"		"string"
+		"itemAdditionalProperties"	"string"
+	}
+
+	"dotarpg_dropped_item"
+	{
+		"playerID"			"short"
+		"itemID"			"long"
+	}
+
+	"dotarpg_add_item_to_slot"
+	{
+		"playerID"			"short"
+		"itemID"			"long"
+		"slotName"			"string"
+	}
+
+	"dotarpg_remove_item_from_slot"
+	{
+		"playerID"			"short"
+		"itemID"			"long"
+		"slotName"			"string"
+	}
+
+	"dotarpg_change_item_charges"
+	{
+		"itemID"		"long"
+		"itemCharges"	"short"
+	}
+
+	"dotarpg_toggle_inventory"
+	{
+		"playerID"	"short"
+	}
+
+	"dotarpg_map_info"
+	{
+		"minX"	"short"
+		"maxX"	"short"
+		"minY"	"short"
+		"maxY"	"short"
+	}
+
+	"dotarpg_map_data"
+	{
+		"posY"	"short"
+		"data"	"string"
+	}
+}

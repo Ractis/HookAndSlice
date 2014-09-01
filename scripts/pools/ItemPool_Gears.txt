@@ -1,0 +1,23 @@
+"ItemPool_Gears"
+{
+	"ItemPool_Weapons"
+	{
+		"Weight"	"100"
+	}
+	"ItemPool_Helmets"
+	{
+		"Weight"	"50"
+	}
+	"ItemPool_BodyArmors"
+	{
+		"Weight"	"50"
+	}
+	"ItemPool_Boots"
+	{
+		"Weight"	"35"
+	}
+	"ItemPool_Accessories"
+	{
+		"Weight"	"80"
+	}
+}

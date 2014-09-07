@@ -8,6 +8,7 @@ require( "GridNavMap" )
 require( "SpawnManager" )
 require( "SpawnDirector" )
 require( "Util_Quest" )
+require( "MissionManager_RescueHostage" )
 
 print( "Dota RPG game mode loaded." )
 
@@ -38,19 +39,21 @@ end
 --------------------------------------------------------------------------------
 function DotaRPG:InitGameMode()
 
+	self:_ReadGameCongiguration()
+
 	-- Initialize class members
 	self._vPlayerInstanceMap = {}
 	self._vPlayerLastValidPosition = {}		-- playerID : ValidPosition
 	self.playerDataMap = {}
 
 	-- Map Progress
-	self._entMapProgress = CreateQuest( "MapProgress" )
-	self._entMapProgressBar = CreateSubquestOf( self._entMapProgress )
-	Subquest_UpdateValue( self._entMapProgressBar, 0, 1 )
+	if not self._vGameConfiguration.NoLevelFlow then
+		self._entMapProgress = CreateQuest( "MapProgress" )
+		self._entMapProgressBar = CreateSubquestOf( self._entMapProgress )
+		Subquest_UpdateValue( self._entMapProgressBar, 0, 1 )
+	end
 
 	-- Update game rules
-	self:_ReadGameCongiguration()
-
 	GameRules:SetSafeToLeave( true )
 	GameRules:SetHeroSelectionTime( 30 )
 	GameRules:SetPreGameTime( 10 )
@@ -88,6 +91,10 @@ function DotaRPG:InitGameMode()
 
 	Convars:RegisterCommand( "dotarpg_revive_all", function ( _ )
 		self:_RefreshPlayers()
+	end, "", FCVAR_CHEAT )
+
+	Convars:RegisterCommand( "dotarpg_kill_player", function ( _, playerID )
+		PlayerResource:GetSelectedHeroEntity( tonumber(playerID) ):ForceKill( true )
 	end, "", FCVAR_CHEAT )
 
 end
@@ -253,10 +260,17 @@ function DotaRPG:_ValidatePlayerMovement()
 	-- Spawn enemies in the range
 	local currentPartyDist = SpawnManager:UpdatePlayersPosition( self._vPlayerLastValidPosition )
 
+	-- Notify to the Mission Manager
+	if type(self._vGameConfiguration.RescueHostage) == "table" then
+		MissionManager_RescueHostage:UpdatePlayersPosition( self._vPlayerLastValidPosition )
+	end
+
 	-- Update progress bar
-	local mapDist = GridNavMap.flMapDistance or 1
-	Quest_UpdateValue( self._entMapProgress, math.floor( currentPartyDist ), math.floor( mapDist ) )
-	Subquest_UpdateValue( self._entMapProgressBar, currentPartyDist, mapDist )
+	if not self._vGameConfiguration.NoLevelFlow then
+		local mapDist = GridNavMap.flMapDistance or 1
+		Quest_UpdateValue( self._entMapProgress, math.floor( currentPartyDist ), math.floor( mapDist ) )
+		Subquest_UpdateValue( self._entMapProgressBar, currentPartyDist, mapDist )
+	end
 	
 	return 0.25
 end
@@ -443,6 +457,12 @@ function DotaRPG:OnGameRulesStateChange()
 			if playerID >= 0 then
 				ItemManager:CreateInventory( playerID )
 			end
+		end
+
+		-- RescueHostage gamemode
+		if type(self._vGameConfiguration.RescueHostage) == "table" then
+			MissionManager_RescueHostage:Initialize()
+			MissionManager_RescueHostage:RegisterHostages( SpawnManager.vHostages )
 		end
 
 		-- Register Thinker

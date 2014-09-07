@@ -3,6 +3,8 @@ require( "PriorityQueue" )
 require( "Math" )
 require( "PerlinNoise" )
 require( "ProbabilityQuadtree" )
+require( "GridNavClusterMap" )
+require( "Profiler" )
 
 --------------------------------------------------------------------------------
 if GridNavMap == nil then
@@ -13,6 +15,8 @@ end
 -- Generate
 --------------------------------------------------------------------------------
 function GridNavMap:Initialize( kv )
+
+	profile_begin( "GridNavMap:Initialize" )
 
 	self.gridMinX = GridNav:WorldToGridPosX( GetWorldMinX() )
 	self.gridMaxX = GridNav:WorldToGridPosX( GetWorldMaxX() )
@@ -67,7 +71,7 @@ function GridNavMap:Initialize( kv )
 	-- Generate maps
 	self.vBlocked				= self:_GenerateBlockedMap()
 	self.vCost, self.vPartition	= self:_GenerateCostAndPartitionMap( self.vBlocked, vTraversableIndexMap )
-	self.vPoolID				= self:_GeneratePoolIDMap( self.vCost )
+	self.vPoolID				= self:_GeneratePoolIDMap( self.vCost, kv.NoLevelFlow )
 	self.vPopulation			= self:_GeneratePopulationMap( self.vCost )
 
 	self.probabilityTree	= self:_GenerateProbabilityTree( self.vPopulation )
@@ -89,6 +93,11 @@ function GridNavMap:Initialize( kv )
 		v:SetEnabled( false, true )
 	end
 
+	--
+	-- Initialize GridNavCluster map
+	--
+	GridNavClusterMap:Initialize( self )
+
 	-- Register Commands
 	Convars:RegisterCommand( "dotarpg_save_gridnavmap_all",
 	function ( ... )
@@ -105,6 +114,8 @@ function GridNavMap:Initialize( kv )
 		self:_Log( "OutputGridNavMapImage == 1" )
 		self:_SaveMapToFileAll()
 	end
+
+	profile_end()
 
 end
 
@@ -434,7 +445,7 @@ function GridNavMap:_GenerateCostAndPartitionMap( vBlocked, vTraversableIndexMap
 end
 
 --------------------------------------------------------------------------------
-function GridNavMap:_GeneratePoolIDMap( vCost )
+function GridNavMap:_GeneratePoolIDMap( vCost, bNoLevelFlow )
 
 	self:_Log( "Generating pool map..." )
 
@@ -445,40 +456,107 @@ function GridNavMap:_GeneratePoolIDMap( vCost )
 	for _,v in pairs(Entities:FindAllByClassname( "info_target" )) do
 		local entName = v:GetName()
 		if string.find( entName, "monster_pool_" ) == 1 then
+			local poolPos = v:GetAbsOrigin()
+			local gridIndex = self:WorldPosToIndex( poolPos )
+
+			local gridPosX = GridNav:WorldToGridPosX( poolPos.x )
+			local gridPosY = GridNav:WorldToGridPosY( poolPos.y )
+
 			table.insert( poolEntAry, {
 				name = entName,
-				cost = vCost[self:WorldPosToIndex( v:GetAbsOrigin() )]
+				["x"] = GridNav:WorldToGridPosX( poolPos.x ),
+				["y"] = GridNav:WorldToGridPosY( poolPos.y ),
+				["index"] = gridIndex,
+				cost = vCost[gridIndex]
 			} )
 
 			self:_Log( "Added monster pool :" )
 			self:_Log( "  Name : " .. entName )
-			self:_Log( "  Cost : " .. vCost[self:WorldPosToIndex( v:GetAbsOrigin() )] )
+			self:_Log( "  Cost : " .. vCost[gridIndex] )
 		end
 	end
 
-	-- Cost to poolID
-	local costToPoolID = function ( cost )
-		local lastID = 0
-		for id, poolEntInfo in ipairs( poolEntAry ) do
-			if cost < poolEntInfo.cost then
-				break
+	if not bNoLevelFlow then
+
+		--------------------------------------------------------------------------------
+		-- Level has a flow
+
+		-- Cost to poolID
+		local costToPoolID = function ( cost )
+			local lastID = 0
+			for id, poolEntInfo in ipairs( poolEntAry ) do
+				if cost < poolEntInfo.cost then
+					break
+				end
+				lastID = id
 			end
-			lastID = id
+			return math.max( lastID, 1 )
 		end
-		return math.max( lastID, 1 )
+
+		-- Generate poolID map
+		self:_ForEachGrid( function ( index, x, y )
+			if vCost[index] == nil then
+				return
+			end
+			if vCost[index] < self.safeArea then
+				return
+			end
+
+			poolIDMap[index] = costToPoolID( vCost[index] )
+		end )
+
+	else
+
+		--------------------------------------------------------------------------------
+		-- Level has no flow
+
+		-- Flood fill from all seeds
+		local openQueue = PriorityQueue.new( function ( a, b )
+			return a.cost < b.cost
+		end )
+		local openSet = {}
+		local closed = {}	-- GridIndex : PoolID
+
+		-- Put all seeds
+		for poolID, poolData in ipairs( poolEntAry ) do
+
+			local gridIndex = poolData.index
+			local gridNode = self:_CreateNode( poolData.x, poolData.y, gridIndex )
+			gridNode.poolID = poolID
+			gridNode.cost = 0
+
+			openQueue:push( gridNode )
+			openSet[gridIndex] = true
+
+		end
+
+		while not openQueue:empty() do
+
+			local currentNode		= openQueue:pop()
+			local currentGridIndex	= currentNode.index
+			openSet[currentGridIndex] = nil
+
+			closed[currentGridIndex] = currentNode.poolID
+
+			-- Collect neighbour nodes
+			for _,neighbourNode in pairs( self:_GetNeighborNodes( currentNode ) ) do
+				local neighbourGridIndex = neighbourNode.index
+				if self.vBlocked[neighbourGridIndex] == false then
+					if openSet[neighbourGridIndex] == nil and closed[neighbourGridIndex] == nil then
+						-- Add to open queue
+						neighbourNode.poolID	= currentNode.poolID
+						neighbourNode.cost		= neighbourNode.cost + currentNode.cost
+
+						openQueue:push( neighbourNode )
+						openSet[neighbourGridIndex] = true
+					end
+				end
+			end
+		end
+
+		poolIDMap = closed
+
 	end
-
-	-- Generate poolID map
-	self:_ForEachGrid( function ( index, x, y )
-		if vCost[index] == nil then
-			return
-		end
-		if vCost[index] < self.safeArea then
-			return
-		end
-
-		poolIDMap[index] = costToPoolID( vCost[index] )
-	end )
 
 	-- Create PoolID to PoolName
 	local vPoolNameMap = {}

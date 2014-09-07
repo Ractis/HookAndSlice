@@ -1,0 +1,190 @@
+"rescue_2"
+{
+//	"OutputGridNavMapImage"		"1"		// For debugging the level
+	"NoLevelFlow"				"1"
+	
+	"RescueHostage"
+	{
+		"NumHostages"	"5"
+	}
+	
+	"ExpMultiplier"		"3"
+	
+	"BaseItemLevelPools"
+	{
+		"monster_pool_1"	"3"		// very easy
+		"monster_pool_2"	"4"		// easy
+		"monster_pool_3"	"4"		// easy
+		"monster_pool_4"	"7"		// medium
+		"monster_pool_5"	"7"		// medium
+		"monster_pool_6"	"15"	// hard
+		"monster_pool_7"	"9"		// hard
+	}
+	
+	"MonsterPools"
+	{
+		// Kobolds & HillTrolls + Zombies
+		"monster_pool_1"
+		{
+		//	"npc_dota_creature_faerie_dragon"	"999999999"
+		
+			"npc_dota_creature_basic_zombie"			"500"
+			"npc_dota_creature_basic_zombie_exploding"
+			{
+				"Weight"		"220"
+				"Intensity"		"1"		// Dangerous
+			}
+			"npc_dota_creature_corpselord"
+			{
+				"Weight"		"80 100 120"
+				"WeightHorde"	"20 50 80"
+				"Intensity"		"1"		// Dangerous
+			}
+			
+			"npc_dota_neutral_kobold"					"100"
+			"npc_dota_neutral_kobold_tunneler"			"50"
+			"npc_dota_neutral_kobold_taskmaster"		"30"
+			"npc_dota_neutral_forest_troll_berserker"	"150"
+			"npc_dota_neutral_forest_troll_high_priest"	"75"
+		}
+		
+		// Wolf & Ogre + Slithereen
+		"monster_pool_2"
+		{
+		//	"npc_dota_creature_lesser_nightcrawler"		"500"
+			"npc_dota_creature_slithereen"
+			{
+				"Weight"		"100 125 150"
+				"WeightHorde"	"15 55 95"
+				"Intensity"		"1"		// Dangerous
+			}
+			
+			"npc_dota_creature_tormented_soul"
+			{
+				"Weight"		"100 125 150"
+				"WeightHorde"	"15 55 95"
+				"Intensity"		"1"
+			}
+			
+			"npc_dota_neutral_fel_beast"	"100"
+			"npc_dota_neutral_ghost"		"50"
+			"npc_dota_neutral_harpy_scout"	"100"
+			"npc_dota_neutral_harpy_storm"	"50"
+		}
+		
+		// Wildwing & Darktroll + Goblins
+		"monster_pool_4"
+		{	
+			"npc_dota_creature_minor_lich"
+			{
+				"Weight"		"50 65 80"
+				"WeightHorde"	"5 20 40"
+				"Intensity"		"1"
+			}
+		//	"npc_dota_creature_rattletrap"			"50"
+			
+			"npc_dota_neutral_wildkin"				"60"
+			"npc_dota_neutral_enraged_wildkin"		"30"
+			"npc_dota_neutral_dark_troll"			"100"
+			"npc_dota_neutral_dark_troll_warlord"	"50"
+		}
+		
+		"monster_pool_3"
+		{
+			"npc_dota_creature_basic_zombie_exploding"
+			{
+				"Weight"		"140"
+				"Intensity"		"1"		// Dangerous
+			}
+			"npc_dota_creature_tormented_soul"
+			{
+				"Weight"		"60 80 100"
+				"WeightHorde"	"15 55 95"
+				"Intensity"		"1"
+			}
+			
+			"npc_dota_neutral_forest_troll_berserker"	"100"
+			"npc_dota_neutral_forest_troll_high_priest"	"50"
+			"npc_dota_neutral_gnoll_assassin"			"150"
+		}
+		
+		// Wildwing & LargeSatyr + Frosty
+		"monster_pool_7"
+		{
+			"npc_dota_creature_tormented_soul"
+			{
+				"Weight"		"125 155 185"
+				"WeightHorde"	"30 65 100"
+				"Intensity"		"1"
+			}
+			"npc_dota_creature_corpselord"
+			{
+				"Weight"		"80 100 120"
+				"WeightHorde"	"20 50 80"
+				"Intensity"		"1"		// Dangerous
+			}
+			"npc_dota_creature_missile_launcher"
+			{
+				"Weight"		"30 40 50"
+				"WeightHorde"	"5 15 25"
+				"Intensity"		"1"
+			}
+		//	"npc_dota_creature_faerie_dragon"
+		//	{
+		//		"Weight"		"80 115 150"
+		//		"WeightHorde"	"10 30 50"
+		//		"Intensity"		"1"
+		//	}
+			
+			"npc_dota_creature_snow_creep_melee"	"80"
+		
+			"npc_dota_neutral_wildkin"				"60"
+			"npc_dota_neutral_enraged_wildkin"		"30"
+			"npc_dota_neutral_satyr_trickster"		"40"
+			"npc_dota_neutral_satyr_soulstealer"	"40"
+			"npc_dota_neutral_satyr_hellcaller"		"40"
+		}
+		
+		// Centaur & Hellbear + Burn
+		"monster_pool_6"
+		{
+			"npc_dota_creature_mini_roshan"
+			{
+				"Weight"		"60 80 100"
+				"WeightHorde"	"0 30 60"
+				"Intensity"		"2"		// Very dangerous
+			}
+			"npc_dota_creature_minor_lich"
+			{
+				"Weight"		"40 55 70"
+				"WeightHorde"	"5 20 40"
+				"Intensity"		"1"
+			}
+			"npc_dota_creature_slithereen"
+			{
+				"Weight"		"125 150 175"
+				"WeightHorde"	"25 65 105"
+				"Intensity"		"1"		// Dangerous
+			}
+		//	"npc_dota_creature_faerie_dragon"
+		//	{
+		//		"Weight"		"80 115 150"
+		//		"WeightHorde"	"10 30 50"
+		//		"Intensity"		"1"
+		//	}
+			
+			"npc_dota_neutral_centaur_outrunner"			"100"
+			"npc_dota_neutral_centaur_khan"					"100"
+			"npc_dota_neutral_polar_furbolg_champion"		"100"
+			"npc_dota_neutral_polar_furbolg_ursa_warrior"	"100"
+		}
+		
+		// Satyr & Golem
+		"monster_pool_5"
+		{
+			"npc_dota_neutral_satyr_trickster"		"100"
+			"npc_dota_neutral_satyr_soulstealer"	"50"
+			"npc_dota_neutral_mud_golem"			"175"
+		}
+	}
+}

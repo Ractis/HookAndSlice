@@ -1,4 +1,6 @@
 
+-- I need a optimized priority queue class seriously...
+
 PriorityQueue = {}
 
 function PriorityQueue.new( cmp )
@@ -15,7 +17,7 @@ end
 
 function PriorityQueue:push( v )
 	table.insert( self._queue, v )
-	table.sort( self._queue, self._cmp )
+--	table.sort( self._queue, self._cmp )	-- THIS IS REAL!!
 end
 
 function PriorityQueue:pop()

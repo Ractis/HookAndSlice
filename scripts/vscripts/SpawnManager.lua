@@ -25,12 +25,15 @@ function SpawnManager:Initialize( kv )
 	self._nMythicalMonsterChance	= kv.MythicalMonsterChance or 0
 	self._flExpMultiplier			= kv.ExpMultiplier or 1
 
+	self._bNoLevelFlow				= kv.NoLevelFlow or false
+
 	self._vPrecachedUnits				= {}
 	self._vUnitsToSpawnAfterPrecache	= {}
 	self._vDesiredEnemiesToSpawnQueue	= {}
 
 	self._bEnableSpawnDesiredEnemy = true
 
+	self._vPlayerPosition = nil
 	self._posPlayerHead = nil
 	self._posPlayerTail = nil
 
@@ -52,6 +55,12 @@ function SpawnManager:Initialize( kv )
 	self:_Log( "Num ChestSpawners : " .. #self._vChestEntAry )
 	self:_SpawnChests( self._vChestEntAry, 0.5 )
 
+	-- RescueHostage gamemode
+	if type(kv.RescueHostage) == "table" then
+		self._vHostageSpawnEntAry = self:_FindHostageSpawnEntities()
+		self.vHostages = self:_SpawnHostages( self._vHostageSpawnEntAry, kv.RescueHostage.NumHostages )
+	end
+
 	-- Register Commands
 	Convars:RegisterCommand( "dotarpg_spawn_mobs", function ( _, numEnemies )
 	 	self:SpawnRandom( numEnemies )
@@ -60,6 +69,10 @@ function SpawnManager:Initialize( kv )
 	Convars:RegisterCommand( "dotarpg_spawn_horde", function ( _, numEnemies )
 	 	self:SpawnHorde( numEnemies )
 	end, "Spawn random horde.", FCVAR_CHEAT )
+
+	Convars:RegisterCommand( "dotarpg_test_cluster_map", function ( _ )
+		self:_TestClusterMap()
+	end, "TEST", FCVAR_CHEAT )
 
 	-- TEST
 --	self:_DumpAllEntities()
@@ -128,6 +141,7 @@ function SpawnManager:UpdatePlayersPosition( vPlayerPosition )
 	end
 
 	-- Update members
+	self._vPlayerPosition = vPlayerPosition
 	self._posPlayerHead = posHead
 	self._posPlayerTail = posTail
 
@@ -174,6 +188,11 @@ end
 function SpawnManager:SpawnHorde()
 
 	self:_Log( "Spawning Horde .." )
+
+	if self._bNoLevelFlow then
+		self:_TestClusterMap()
+		return
+	end
 
 	-- Calculate horde size
 	local numGroups = RandomInt( self._nHordeGroupMin, self._nHordeGroupMax )
@@ -393,6 +412,21 @@ function SpawnManager:_FindChestEntities()
 end
 
 --------------------------------------------------------------------------------
+function SpawnManager:_FindHostageSpawnEntities()
+	-- Collect pool entities in the map
+	local hostageSpawnEntAry = {}
+
+	for _,v in pairs(Entities:FindAllByClassname( "info_target" )) do
+		local entName = v:GetName()
+		if string.find( entName, "hostage_spawn" ) == 1 then
+			table.insert( hostageSpawnEntAry, v )
+		end
+	end
+
+	return hostageSpawnEntAry
+end
+
+--------------------------------------------------------------------------------
 function SpawnManager:_SpawnChests( chestEntAry, probability )
 	
 	local numChestsSpawned = 0
@@ -410,6 +444,117 @@ function SpawnManager:_SpawnChests( chestEntAry, probability )
 
 	self:_Log( numChestsSpawned .. " chests deployed in the map." )
 
+end
+
+--------------------------------------------------------------------------------
+function SpawnManager:_SpawnHostages( hostageSpawnEntAry, numHostagesToSpawn )
+	
+	local vHostages = {}
+
+	if #hostageSpawnEntAry < numHostagesToSpawn then
+		self:_Log( "Spawners for hostages are too few!" )
+		self:_Log( "  Num Spawners : " .. #hostageSpawnEntAry )
+		self:_Log( "  Num Hostages : " .. numHostagesToSpawn )
+		return {}
+	end
+
+	for i=1, numHostagesToSpawn do
+
+		-- Choose a spawner
+		local spawnerID = RandomInt( 1, #hostageSpawnEntAry )
+		local spawnerEnt = hostageSpawnEntAry[spawnerID]
+
+		table.remove( hostageSpawnEntAry, spawnerID )
+
+		-- Spawn a hostage
+		local hostage = CreateUnitByName( "npc_dotarpg_hostage", spawnerEnt:GetAbsOrigin(), true, nil, nil, DOTA_TEAM_GOODGUYS )
+		hostage:SetAngles( 0, RandomFloat( 0, 360 ), 0 )
+
+		table.insert( vHostages, hostage )
+
+	end
+
+	return vHostages
+
+end
+
+--------------------------------------------------------------------------------
+function SpawnManager:_TestClusterMap()
+	local candidateRegions = GridNavClusterMap:FindCandidateRegions( self._vPlayerPosition, 4 )
+	if #candidateRegions == 0 then
+		self:_Log( "Candidate regions for spawning enemies not found." )
+		return
+	end
+
+--[[
+	DebugDrawClear()
+	for k,data in pairs(candidateRegions) do
+		local cellIndex = data.region.cells[1]
+		local nearestPlayerID = data.nearestPlayerID
+		local x, y = GridNavMap:_IndexToGridPos( cellIndex )
+
+		if nearestPlayerID == 0 then
+			DebugDrawLine( self._vPlayerPosition[0], Vector( x*64, y*64, 256 ), 255, 255, 0, true, 60.0 ) 
+		else
+			DebugDrawLine( self._vPlayerPosition[nearestPlayerID], Vector( x*64, y*64, 256 ), 0, 255, 255, true, 60.0 ) 
+		end
+	end
+--]]
+
+	-- Calculate horde size
+	local numGroups = RandomInt( self._nHordeGroupMin, self._nHordeGroupMax )
+	local numEnemies = RandomInt( self._nHordeSizeMin, self._nHordeSizeMax )
+
+	self:_Log( "  NumGroups : " .. numGroups )
+	self:_Log( "  NumEnemies : " .. numEnemies )
+
+	local groupNumEnemies = {}	-- groupIndex : numEnemies for this group
+	do
+		local modEnemies = numEnemies % numGroups
+		local minEnemies = ( numEnemies - modEnemies ) / numGroups
+		for i=1, numGroups do
+			if i <= modEnemies then
+				groupNumEnemies[i] = minEnemies + 1
+			else
+				groupNumEnemies[i] = minEnemies
+			end
+		end
+	end
+
+	self:_Log( "  Enemies for each group : " .. table.concat( groupNumEnemies, ", " ) )
+
+	-- Grab goal entities
+	local goalEntities
+
+	if not self.funcGetHeroEntities then
+		self:_Log( "Horde will have no goal entities." )
+	else
+		goalEntities = self.funcGetHeroEntities()
+		self:_Log( "Num Goals for the Horde : " .. #goalEntities )
+	end
+
+	-- Find some SpawnPoint for Horde
+	for i=1, numGroups do
+		local region = candidateRegions[RandomInt(1,#candidateRegions)].region
+		local cellIndex = region.cells[RandomInt(1,#region.cells)]
+		local x, y = GridNavMap:_IndexToGridPos( cellIndex )
+
+		-- test
+		for j=1, groupNumEnemies[numGroups] do
+			local data = self:_GenerateRandomEnemy( x, y, true )
+			if goalEntities then
+				-- Pick one goal from 'goalEntities'
+				local selected = RandomFromWeights( goalEntities, function ( k, v )
+					-- TODO: Weight by player's Health
+					return 1
+				end )
+
+				data.goalEntity = goalEntities[selected]	-- Set the goal
+			end
+			self:_SpawnEnemyWithPrecache( data )
+			-- TODO: need VALIDATE the position of the monster.
+		end
+	end
 end
 
 --------------------------------------------------------------------------------

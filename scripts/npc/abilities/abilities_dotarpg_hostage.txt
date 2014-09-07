@@ -1,0 +1,78 @@
+	//=================================================================================================================
+	// Hostage default
+	//=================================================================================================================
+	"dotarpg_hostage_default"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"			"ability_datadriven"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Data-Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"default"
+			{
+				"Passive"		"1"
+				"IsPurgable"	"0"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+				//	"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Hostage arrested
+	//=================================================================================================================
+	"dotarpg_hostage_arrested"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"			"ability_datadriven"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"arrested"
+			}
+		}
+		
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"arrested"
+			}
+		}
+		
+		// Data-Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"arrested"
+			{
+				"IsPurgable"	"0"
+				"EffectName" 		"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				"States"
+				{
+				//	"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				//	"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}

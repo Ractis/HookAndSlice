@@ -5,17 +5,17 @@
 "DOTAAbilities"
 {
 
-	// items_dotarpg_comsumable.txt
+	// items_dotahs_comsumable.txt
 	//=================================================================================================================
 	// Smoke of Haste
 	//=================================================================================================================
-	"item_dotarpg_smoke_of_haste"
+	"item_dotahs_smoke_of_haste"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"	"item_dotarpg_smoke_of_haste"
+		"AbilityTextureName"	"item_dotahs_smoke_of_haste"
 		"Model"					"models/props_gameplay/smoke.mdl"
 		
 		// Stats		
@@ -99,13 +99,13 @@
 	//=================================================================================================================
 	// Smoke of BKB
 	//=================================================================================================================
-	"item_dotarpg_smoke_of_bkb"
+	"item_dotahs_smoke_of_bkb"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityTextureName"	"item_dotarpg_smoke_of_bkb"
+		"AbilityTextureName"	"item_dotahs_smoke_of_bkb"
 		"Model"					"models/props_gameplay/smoke.mdl"
 		
 		// Stats		
@@ -180,17 +180,102 @@
 			}
 		}
 	}
-	// items_dotarpg_core.txt
+
 	//=================================================================================================================
-	// DotaRPG : Inventory
+	// Dust of Silence
 	//=================================================================================================================
-	"item_dotarpg_inventory"
+	"item_dotahs_dust_of_silence"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"item_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityTextureName"	"item_dotahs_dust_of_silence"
+		"Model"					"models/props_gameplay/dust.vmdl"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"		"25.0"
+		"AbilityCastRange"		"%radius"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemStackable"		"1"
+		"ItemPurchasable"	"0"
+		"ItemDroppable"		"0"
+		"ItemSellable"		"0"
+		"ItemKillable"		"0"
+		"ItemShareability"	"ITEM_FULLY_SHAREABLE_STACKING"
+		"ItemPermanent"			"0"
+		"ItemInitialCharges"	"1"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"silence"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+				}
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/items2_fx/smoke_of_deceit.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+				"EffectRadius"		"%radius"
+			}
+			"SpendCharge"
+			{}
+		}
+		
+		// Data-Driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"silence"
+			{
+				"Duration"			"%duration"
+				"EffectName" 		"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1050"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}
+		}
+	}
+	// items_dotahs_core.txt
+	//=================================================================================================================
+	// DotaHS : Inventory
+	//=================================================================================================================
+	"item_dotahs_inventory"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"	"item_dotarpg_inventory"
+		"AbilityTextureName"	"item_dotahs_inventory"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -209,18 +294,18 @@
 			}
 		}
 	}
-	// items_dotarpg_modifiers.txt
+	// items_dotahs_modifiers.txt
 	//=================================================================================================================
 	// ms modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_ms"
+	"item_dotahs_modifiers_ms"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_ms_1"
+			"dotahs_ms_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -228,7 +313,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"1"
 				}
 			}
-			"dotarpg_ms_2"
+			"dotahs_ms_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -236,7 +321,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"2"
 				}
 			}
-			"dotarpg_ms_4"
+			"dotahs_ms_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -244,7 +329,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"4"
 				}
 			}
-			"dotarpg_ms_8"
+			"dotahs_ms_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -252,7 +337,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"8"
 				}
 			}
-			"dotarpg_ms_16"
+			"dotahs_ms_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -260,7 +345,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"16"
 				}
 			}
-			"dotarpg_ms_32"
+			"dotahs_ms_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -268,7 +353,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"32"
 				}
 			}
-			"dotarpg_ms_64"
+			"dotahs_ms_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -276,7 +361,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"64"
 				}
 			}
-			"dotarpg_ms_128"
+			"dotahs_ms_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -284,7 +369,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"128"
 				}
 			}
-			"dotarpg_ms_256"
+			"dotahs_ms_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -292,7 +377,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"256"
 				}
 			}
-			"dotarpg_ms_512"
+			"dotahs_ms_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -300,7 +385,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"512"
 				}
 			}
-			"dotarpg_ms_1024"
+			"dotahs_ms_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -308,7 +393,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"1024"
 				}
 			}
-			"dotarpg_ms_2048"
+			"dotahs_ms_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -316,7 +401,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"2048"
 				}
 			}
-			"dotarpg_ms_4096"
+			"dotahs_ms_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -324,7 +409,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"4096"
 				}
 			}
-			"dotarpg_ms_8192"
+			"dotahs_ms_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -332,7 +417,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"8192"
 				}
 			}
-			"dotarpg_ms_16384"
+			"dotahs_ms_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -340,7 +425,7 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"16384"
 				}
 			}
-			"dotarpg_ms_32768"
+			"dotahs_ms_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -354,14 +439,14 @@
 	//=================================================================================================================
 	// manareg modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_manareg"
+	"item_dotahs_modifiers_manareg"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_manareg_1"
+			"dotahs_manareg_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -369,7 +454,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"1"
 				}
 			}
-			"dotarpg_manareg_2"
+			"dotahs_manareg_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -377,7 +462,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"2"
 				}
 			}
-			"dotarpg_manareg_4"
+			"dotahs_manareg_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -385,7 +470,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"4"
 				}
 			}
-			"dotarpg_manareg_8"
+			"dotahs_manareg_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -393,7 +478,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"8"
 				}
 			}
-			"dotarpg_manareg_16"
+			"dotahs_manareg_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -401,7 +486,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"16"
 				}
 			}
-			"dotarpg_manareg_32"
+			"dotahs_manareg_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -409,7 +494,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"32"
 				}
 			}
-			"dotarpg_manareg_64"
+			"dotahs_manareg_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -417,7 +502,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"64"
 				}
 			}
-			"dotarpg_manareg_128"
+			"dotahs_manareg_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -425,7 +510,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"128"
 				}
 			}
-			"dotarpg_manareg_256"
+			"dotahs_manareg_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -433,7 +518,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"256"
 				}
 			}
-			"dotarpg_manareg_512"
+			"dotahs_manareg_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -441,7 +526,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"512"
 				}
 			}
-			"dotarpg_manareg_1024"
+			"dotahs_manareg_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -449,7 +534,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"1024"
 				}
 			}
-			"dotarpg_manareg_2048"
+			"dotahs_manareg_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -457,7 +542,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"2048"
 				}
 			}
-			"dotarpg_manareg_4096"
+			"dotahs_manareg_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -465,7 +550,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"4096"
 				}
 			}
-			"dotarpg_manareg_8192"
+			"dotahs_manareg_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -473,7 +558,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"8192"
 				}
 			}
-			"dotarpg_manareg_16384"
+			"dotahs_manareg_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -481,7 +566,7 @@
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"16384"
 				}
 			}
-			"dotarpg_manareg_32768"
+			"dotahs_manareg_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -495,14 +580,14 @@
 	//=================================================================================================================
 	// int modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_int"
+	"item_dotahs_modifiers_int"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_int_1"
+			"dotahs_int_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -510,7 +595,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"1"
 				}
 			}
-			"dotarpg_int_2"
+			"dotahs_int_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -518,7 +603,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"2"
 				}
 			}
-			"dotarpg_int_4"
+			"dotahs_int_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -526,7 +611,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"4"
 				}
 			}
-			"dotarpg_int_8"
+			"dotahs_int_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -534,7 +619,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"8"
 				}
 			}
-			"dotarpg_int_16"
+			"dotahs_int_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -542,7 +627,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"16"
 				}
 			}
-			"dotarpg_int_32"
+			"dotahs_int_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -550,7 +635,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"32"
 				}
 			}
-			"dotarpg_int_64"
+			"dotahs_int_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -558,7 +643,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"64"
 				}
 			}
-			"dotarpg_int_128"
+			"dotahs_int_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -566,7 +651,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"128"
 				}
 			}
-			"dotarpg_int_256"
+			"dotahs_int_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -574,7 +659,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"256"
 				}
 			}
-			"dotarpg_int_512"
+			"dotahs_int_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -582,7 +667,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"512"
 				}
 			}
-			"dotarpg_int_1024"
+			"dotahs_int_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -590,7 +675,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"1024"
 				}
 			}
-			"dotarpg_int_2048"
+			"dotahs_int_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -598,7 +683,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"2048"
 				}
 			}
-			"dotarpg_int_4096"
+			"dotahs_int_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -606,7 +691,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"4096"
 				}
 			}
-			"dotarpg_int_8192"
+			"dotahs_int_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -614,7 +699,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"8192"
 				}
 			}
-			"dotarpg_int_16384"
+			"dotahs_int_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -622,7 +707,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"16384"
 				}
 			}
-			"dotarpg_int_32768"
+			"dotahs_int_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -636,14 +721,14 @@
 	//=================================================================================================================
 	// hp modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_hp"
+	"item_dotahs_modifiers_hp"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_hp_1"
+			"dotahs_hp_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -651,7 +736,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"1"
 				}
 			}
-			"dotarpg_hp_2"
+			"dotahs_hp_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -659,7 +744,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"2"
 				}
 			}
-			"dotarpg_hp_4"
+			"dotahs_hp_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -667,7 +752,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"4"
 				}
 			}
-			"dotarpg_hp_8"
+			"dotahs_hp_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -675,7 +760,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"8"
 				}
 			}
-			"dotarpg_hp_16"
+			"dotahs_hp_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -683,7 +768,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"16"
 				}
 			}
-			"dotarpg_hp_32"
+			"dotahs_hp_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -691,7 +776,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"32"
 				}
 			}
-			"dotarpg_hp_64"
+			"dotahs_hp_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -699,7 +784,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"64"
 				}
 			}
-			"dotarpg_hp_128"
+			"dotahs_hp_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -707,7 +792,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"128"
 				}
 			}
-			"dotarpg_hp_256"
+			"dotahs_hp_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -715,7 +800,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"256"
 				}
 			}
-			"dotarpg_hp_512"
+			"dotahs_hp_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -723,7 +808,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"512"
 				}
 			}
-			"dotarpg_hp_1024"
+			"dotahs_hp_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -731,7 +816,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"1024"
 				}
 			}
-			"dotarpg_hp_2048"
+			"dotahs_hp_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -739,7 +824,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"2048"
 				}
 			}
-			"dotarpg_hp_4096"
+			"dotahs_hp_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -747,7 +832,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"4096"
 				}
 			}
-			"dotarpg_hp_8192"
+			"dotahs_hp_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -755,7 +840,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"8192"
 				}
 			}
-			"dotarpg_hp_16384"
+			"dotahs_hp_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -763,7 +848,7 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"16384"
 				}
 			}
-			"dotarpg_hp_32768"
+			"dotahs_hp_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -777,14 +862,14 @@
 	//=================================================================================================================
 	// as modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_as"
+	"item_dotahs_modifiers_as"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_as_1"
+			"dotahs_as_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -792,7 +877,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
 				}
 			}
-			"dotarpg_as_2"
+			"dotahs_as_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -800,7 +885,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"2"
 				}
 			}
-			"dotarpg_as_4"
+			"dotahs_as_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -808,7 +893,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"4"
 				}
 			}
-			"dotarpg_as_8"
+			"dotahs_as_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -816,7 +901,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"8"
 				}
 			}
-			"dotarpg_as_16"
+			"dotahs_as_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -824,7 +909,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"16"
 				}
 			}
-			"dotarpg_as_32"
+			"dotahs_as_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -832,7 +917,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"32"
 				}
 			}
-			"dotarpg_as_64"
+			"dotahs_as_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -840,7 +925,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"64"
 				}
 			}
-			"dotarpg_as_128"
+			"dotahs_as_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -848,7 +933,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"128"
 				}
 			}
-			"dotarpg_as_256"
+			"dotahs_as_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -856,7 +941,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"256"
 				}
 			}
-			"dotarpg_as_512"
+			"dotahs_as_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -864,7 +949,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"512"
 				}
 			}
-			"dotarpg_as_1024"
+			"dotahs_as_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -872,7 +957,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1024"
 				}
 			}
-			"dotarpg_as_2048"
+			"dotahs_as_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -880,7 +965,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"2048"
 				}
 			}
-			"dotarpg_as_4096"
+			"dotahs_as_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -888,7 +973,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"4096"
 				}
 			}
-			"dotarpg_as_8192"
+			"dotahs_as_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -896,7 +981,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"8192"
 				}
 			}
-			"dotarpg_as_16384"
+			"dotahs_as_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -904,7 +989,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"16384"
 				}
 			}
-			"dotarpg_as_32768"
+			"dotahs_as_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -918,14 +1003,14 @@
 	//=================================================================================================================
 	// agi modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_agi"
+	"item_dotahs_modifiers_agi"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_agi_1"
+			"dotahs_agi_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -933,7 +1018,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"1"
 				}
 			}
-			"dotarpg_agi_2"
+			"dotahs_agi_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -941,7 +1026,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"2"
 				}
 			}
-			"dotarpg_agi_4"
+			"dotahs_agi_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -949,7 +1034,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"4"
 				}
 			}
-			"dotarpg_agi_8"
+			"dotahs_agi_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -957,7 +1042,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"8"
 				}
 			}
-			"dotarpg_agi_16"
+			"dotahs_agi_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -965,7 +1050,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"16"
 				}
 			}
-			"dotarpg_agi_32"
+			"dotahs_agi_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -973,7 +1058,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"32"
 				}
 			}
-			"dotarpg_agi_64"
+			"dotahs_agi_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -981,7 +1066,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"64"
 				}
 			}
-			"dotarpg_agi_128"
+			"dotahs_agi_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -989,7 +1074,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"128"
 				}
 			}
-			"dotarpg_agi_256"
+			"dotahs_agi_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -997,7 +1082,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"256"
 				}
 			}
-			"dotarpg_agi_512"
+			"dotahs_agi_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1005,7 +1090,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"512"
 				}
 			}
-			"dotarpg_agi_1024"
+			"dotahs_agi_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1013,7 +1098,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"1024"
 				}
 			}
-			"dotarpg_agi_2048"
+			"dotahs_agi_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1021,7 +1106,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"2048"
 				}
 			}
-			"dotarpg_agi_4096"
+			"dotahs_agi_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1029,7 +1114,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"4096"
 				}
 			}
-			"dotarpg_agi_8192"
+			"dotahs_agi_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1037,7 +1122,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"8192"
 				}
 			}
-			"dotarpg_agi_16384"
+			"dotahs_agi_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1045,7 +1130,7 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"16384"
 				}
 			}
-			"dotarpg_agi_32768"
+			"dotahs_agi_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1059,14 +1144,14 @@
 	//=================================================================================================================
 	// armor modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_armor"
+	"item_dotahs_modifiers_armor"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_armor_1"
+			"dotahs_armor_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1074,7 +1159,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"1"
 				}
 			}
-			"dotarpg_armor_2"
+			"dotahs_armor_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1082,7 +1167,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"2"
 				}
 			}
-			"dotarpg_armor_4"
+			"dotahs_armor_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1090,7 +1175,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"4"
 				}
 			}
-			"dotarpg_armor_8"
+			"dotahs_armor_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1098,7 +1183,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"8"
 				}
 			}
-			"dotarpg_armor_16"
+			"dotahs_armor_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1106,7 +1191,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"16"
 				}
 			}
-			"dotarpg_armor_32"
+			"dotahs_armor_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1114,7 +1199,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"32"
 				}
 			}
-			"dotarpg_armor_64"
+			"dotahs_armor_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1122,7 +1207,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"64"
 				}
 			}
-			"dotarpg_armor_128"
+			"dotahs_armor_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1130,7 +1215,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"128"
 				}
 			}
-			"dotarpg_armor_256"
+			"dotahs_armor_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1138,7 +1223,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"256"
 				}
 			}
-			"dotarpg_armor_512"
+			"dotahs_armor_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1146,7 +1231,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"512"
 				}
 			}
-			"dotarpg_armor_1024"
+			"dotahs_armor_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1154,7 +1239,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"1024"
 				}
 			}
-			"dotarpg_armor_2048"
+			"dotahs_armor_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1162,7 +1247,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"2048"
 				}
 			}
-			"dotarpg_armor_4096"
+			"dotahs_armor_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1170,7 +1255,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"4096"
 				}
 			}
-			"dotarpg_armor_8192"
+			"dotahs_armor_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1178,7 +1263,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"8192"
 				}
 			}
-			"dotarpg_armor_16384"
+			"dotahs_armor_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1186,7 +1271,7 @@
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"16384"
 				}
 			}
-			"dotarpg_armor_32768"
+			"dotahs_armor_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1200,14 +1285,14 @@
 	//=================================================================================================================
 	// damage modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_damage"
+	"item_dotahs_modifiers_damage"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_damage_1"
+			"dotahs_damage_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1215,7 +1300,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"1"
 				}
 			}
-			"dotarpg_damage_2"
+			"dotahs_damage_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1223,7 +1308,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"2"
 				}
 			}
-			"dotarpg_damage_4"
+			"dotahs_damage_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1231,7 +1316,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"4"
 				}
 			}
-			"dotarpg_damage_8"
+			"dotahs_damage_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1239,7 +1324,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"8"
 				}
 			}
-			"dotarpg_damage_16"
+			"dotahs_damage_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1247,7 +1332,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"16"
 				}
 			}
-			"dotarpg_damage_32"
+			"dotahs_damage_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1255,7 +1340,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"32"
 				}
 			}
-			"dotarpg_damage_64"
+			"dotahs_damage_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1263,7 +1348,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"64"
 				}
 			}
-			"dotarpg_damage_128"
+			"dotahs_damage_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1271,7 +1356,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"128"
 				}
 			}
-			"dotarpg_damage_256"
+			"dotahs_damage_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1279,7 +1364,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"256"
 				}
 			}
-			"dotarpg_damage_512"
+			"dotahs_damage_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1287,7 +1372,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"512"
 				}
 			}
-			"dotarpg_damage_1024"
+			"dotahs_damage_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1295,7 +1380,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"1024"
 				}
 			}
-			"dotarpg_damage_2048"
+			"dotahs_damage_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1303,7 +1388,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"2048"
 				}
 			}
-			"dotarpg_damage_4096"
+			"dotahs_damage_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1311,7 +1396,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"4096"
 				}
 			}
-			"dotarpg_damage_8192"
+			"dotahs_damage_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1319,7 +1404,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"8192"
 				}
 			}
-			"dotarpg_damage_16384"
+			"dotahs_damage_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1327,7 +1412,7 @@
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"16384"
 				}
 			}
-			"dotarpg_damage_32768"
+			"dotahs_damage_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1341,14 +1426,14 @@
 	//=================================================================================================================
 	// mana modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_mana"
+	"item_dotahs_modifiers_mana"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_mana_1"
+			"dotahs_mana_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1356,7 +1441,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
 				}
 			}
-			"dotarpg_mana_2"
+			"dotahs_mana_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1364,7 +1449,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"2"
 				}
 			}
-			"dotarpg_mana_4"
+			"dotahs_mana_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1372,7 +1457,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"4"
 				}
 			}
-			"dotarpg_mana_8"
+			"dotahs_mana_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1380,7 +1465,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"8"
 				}
 			}
-			"dotarpg_mana_16"
+			"dotahs_mana_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1388,7 +1473,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"16"
 				}
 			}
-			"dotarpg_mana_32"
+			"dotahs_mana_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1396,7 +1481,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"32"
 				}
 			}
-			"dotarpg_mana_64"
+			"dotahs_mana_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1404,7 +1489,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"64"
 				}
 			}
-			"dotarpg_mana_128"
+			"dotahs_mana_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1412,7 +1497,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"128"
 				}
 			}
-			"dotarpg_mana_256"
+			"dotahs_mana_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1420,7 +1505,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"256"
 				}
 			}
-			"dotarpg_mana_512"
+			"dotahs_mana_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1428,7 +1513,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"512"
 				}
 			}
-			"dotarpg_mana_1024"
+			"dotahs_mana_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1436,7 +1521,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"1024"
 				}
 			}
-			"dotarpg_mana_2048"
+			"dotahs_mana_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1444,7 +1529,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"2048"
 				}
 			}
-			"dotarpg_mana_4096"
+			"dotahs_mana_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1452,7 +1537,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"4096"
 				}
 			}
-			"dotarpg_mana_8192"
+			"dotahs_mana_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1460,7 +1545,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"8192"
 				}
 			}
-			"dotarpg_mana_16384"
+			"dotahs_mana_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1468,7 +1553,7 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"16384"
 				}
 			}
-			"dotarpg_mana_32768"
+			"dotahs_mana_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1482,14 +1567,14 @@
 	//=================================================================================================================
 	// hpreg modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_hpreg"
+	"item_dotahs_modifiers_hpreg"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_hpreg_1"
+			"dotahs_hpreg_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1497,7 +1582,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"1"
 				}
 			}
-			"dotarpg_hpreg_2"
+			"dotahs_hpreg_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1505,7 +1590,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"2"
 				}
 			}
-			"dotarpg_hpreg_4"
+			"dotahs_hpreg_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1513,7 +1598,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"4"
 				}
 			}
-			"dotarpg_hpreg_8"
+			"dotahs_hpreg_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1521,7 +1606,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"8"
 				}
 			}
-			"dotarpg_hpreg_16"
+			"dotahs_hpreg_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1529,7 +1614,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"16"
 				}
 			}
-			"dotarpg_hpreg_32"
+			"dotahs_hpreg_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1537,7 +1622,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"32"
 				}
 			}
-			"dotarpg_hpreg_64"
+			"dotahs_hpreg_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1545,7 +1630,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"64"
 				}
 			}
-			"dotarpg_hpreg_128"
+			"dotahs_hpreg_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1553,7 +1638,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"128"
 				}
 			}
-			"dotarpg_hpreg_256"
+			"dotahs_hpreg_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1561,7 +1646,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"256"
 				}
 			}
-			"dotarpg_hpreg_512"
+			"dotahs_hpreg_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1569,7 +1654,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"512"
 				}
 			}
-			"dotarpg_hpreg_1024"
+			"dotahs_hpreg_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1577,7 +1662,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"1024"
 				}
 			}
-			"dotarpg_hpreg_2048"
+			"dotahs_hpreg_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1585,7 +1670,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"2048"
 				}
 			}
-			"dotarpg_hpreg_4096"
+			"dotahs_hpreg_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1593,7 +1678,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"4096"
 				}
 			}
-			"dotarpg_hpreg_8192"
+			"dotahs_hpreg_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1601,7 +1686,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"8192"
 				}
 			}
-			"dotarpg_hpreg_16384"
+			"dotahs_hpreg_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1609,7 +1694,7 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"16384"
 				}
 			}
-			"dotarpg_hpreg_32768"
+			"dotahs_hpreg_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1623,14 +1708,14 @@
 	//=================================================================================================================
 	// str modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_str"
+	"item_dotahs_modifiers_str"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_str_1"
+			"dotahs_str_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1638,7 +1723,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"1"
 				}
 			}
-			"dotarpg_str_2"
+			"dotahs_str_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1646,7 +1731,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"2"
 				}
 			}
-			"dotarpg_str_4"
+			"dotahs_str_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1654,7 +1739,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"4"
 				}
 			}
-			"dotarpg_str_8"
+			"dotahs_str_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1662,7 +1747,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"8"
 				}
 			}
-			"dotarpg_str_16"
+			"dotahs_str_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1670,7 +1755,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"16"
 				}
 			}
-			"dotarpg_str_32"
+			"dotahs_str_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1678,7 +1763,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"32"
 				}
 			}
-			"dotarpg_str_64"
+			"dotahs_str_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1686,7 +1771,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"64"
 				}
 			}
-			"dotarpg_str_128"
+			"dotahs_str_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1694,7 +1779,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"128"
 				}
 			}
-			"dotarpg_str_256"
+			"dotahs_str_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1702,7 +1787,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"256"
 				}
 			}
-			"dotarpg_str_512"
+			"dotahs_str_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1710,7 +1795,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"512"
 				}
 			}
-			"dotarpg_str_1024"
+			"dotahs_str_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1718,7 +1803,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"1024"
 				}
 			}
-			"dotarpg_str_2048"
+			"dotahs_str_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1726,7 +1811,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"2048"
 				}
 			}
-			"dotarpg_str_4096"
+			"dotahs_str_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1734,7 +1819,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"4096"
 				}
 			}
-			"dotarpg_str_8192"
+			"dotahs_str_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1742,7 +1827,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"8192"
 				}
 			}
-			"dotarpg_str_16384"
+			"dotahs_str_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1750,7 +1835,7 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"16384"
 				}
 			}
-			"dotarpg_str_32768"
+			"dotahs_str_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1764,14 +1849,14 @@
 	//=================================================================================================================
 	// mr modifier
 	//=================================================================================================================
-	"item_dotarpg_modifiers_mr"
+	"item_dotahs_modifiers_mr"
 	{
 		"BaseClass"				"item_datadriven"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"Modifiers"
 		{
-			"dotarpg_mr_1"
+			"dotahs_mr_1"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1779,7 +1864,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"1"
 				}
 			}
-			"dotarpg_mr_2"
+			"dotahs_mr_2"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1787,7 +1872,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"2"
 				}
 			}
-			"dotarpg_mr_4"
+			"dotahs_mr_4"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1795,7 +1880,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"4"
 				}
 			}
-			"dotarpg_mr_8"
+			"dotahs_mr_8"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1803,7 +1888,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"8"
 				}
 			}
-			"dotarpg_mr_16"
+			"dotahs_mr_16"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1811,7 +1896,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"16"
 				}
 			}
-			"dotarpg_mr_32"
+			"dotahs_mr_32"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1819,7 +1904,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"32"
 				}
 			}
-			"dotarpg_mr_64"
+			"dotahs_mr_64"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1827,7 +1912,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"64"
 				}
 			}
-			"dotarpg_mr_128"
+			"dotahs_mr_128"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1835,7 +1920,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"128"
 				}
 			}
-			"dotarpg_mr_256"
+			"dotahs_mr_256"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1843,7 +1928,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"256"
 				}
 			}
-			"dotarpg_mr_512"
+			"dotahs_mr_512"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1851,7 +1936,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"512"
 				}
 			}
-			"dotarpg_mr_1024"
+			"dotahs_mr_1024"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1859,7 +1944,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"1024"
 				}
 			}
-			"dotarpg_mr_2048"
+			"dotahs_mr_2048"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1867,7 +1952,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"2048"
 				}
 			}
-			"dotarpg_mr_4096"
+			"dotahs_mr_4096"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1875,7 +1960,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"4096"
 				}
 			}
-			"dotarpg_mr_8192"
+			"dotahs_mr_8192"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1883,7 +1968,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"8192"
 				}
 			}
-			"dotarpg_mr_16384"
+			"dotahs_mr_16384"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1891,7 +1976,7 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"16384"
 				}
 			}
-			"dotarpg_mr_32768"
+			"dotahs_mr_32768"
 			{
 				"IsHidden"	"1"
 				"Properties"
@@ -1903,8 +1988,8 @@
 	}
 
 
-	// items_dotarpg_test.txt
-	"item_dotarpg_weapon"
+	// items_dotahs_test.txt
+	"item_dotahs_weapon"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 	"DefaultCooldownReduction"		"50"	// [%]
 	"DefaultAdditionalHPRegen"		"2.5"	// [Per second]
 	"DefaultAdditionalManaRegen"	"5.0"	// [Per second]
+	"StartingLevel"					"1"
 	
 	"StartSafeZoneDistance"			"2000"	// [units]
 	"EnemySpawnDistance"			"2500"	// [units]
@@ -26,4 +27,9 @@
 	"MythicalMonsterChance"			"3"		// [%]
 	
 	"ExpMultiplier"					"2"
+	
+	"EnemyHPMultiplierSolo"			"0.40"
+	"EnemyHPMultiplierGain"			"0.15"
+	"DesiredEnemiesSolo"			"110 120 130"
+	"DesiredEnemiesGain"			"40 45 50"
 }

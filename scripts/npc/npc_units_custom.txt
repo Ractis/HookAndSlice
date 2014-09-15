@@ -5,8 +5,1879 @@
 "DOTAUnits"
 {
 
-	// units_dotarpg_chests.txt
-	"npc_dotarpg_chest"
+	// npc_dotahs_bane.txt
+	//=================================================================================
+	// npc_dotahs_bane
+	//=================================================================================
+	"npc_dotahs_bane"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/bane/bane.mdl"
+		"ModelScale"				"0.75"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_bane"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_bane.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_nightmare"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"33"
+		"AttackDamageMax"			"39"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"400"
+		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"315"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"
+		"StatusHealthRegen"			"4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"50"
+					"Avoidance"			"100"
+					"Support"			"50"
+					"RoamDistance"		"700"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"90"
+			"DamageGain"				"4"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+			}
+
+			"DefensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_nightmare"
+					"Buff"				"1"
+				}
+			}
+		}
+	}
+
+	// npc_dotahs_dazzle.txt
+	//=================================================================================
+	// npc_dotahs_dazzle
+	//=================================================================================
+	"npc_dotahs_dazzle"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/dazzle/dazzle.vmdl"
+		"ModelScale"				"0.85"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_dazzle"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_dazzle.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_shallow_grave"
+		"Ability2"					"dotahs_creature_shadow_wave"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"
+		"AttackDamageMax"			"35"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"700"
+		"AttackRange"				"530"
+		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"5"
+		"StatusMana"				"500"
+		"StatusManaRegen"			"2"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"5"
+					"Support"			"75"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"120"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+			}
+
+			"DefensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_shallow_grave"
+					"Buff"				"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_shadow_wave"
+					"Buff"				"1"
+				}
+			}
+		}
+	}
+
+	// npc_dotahs_faerie_dragon.txt
+	//=================================================================================
+	// npc_dotahs_faerie_dragon
+	//=================================================================================
+	"npc_dotahs_faerie_dragon"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/puck/puck.vmdl"
+		"ModelScale"				"0.6"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_puck"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_puck.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_dream_coil"
+		"Ability2"					"dotahs_creature_phase_shift"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"47"
+		"AttackDamageMax"			"58"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"750"
+		"AttackRange"				"550"
+		"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"
+		"StatusHealthRegen"			"5"
+		"StatusMana"				"500"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"1000"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"150"
+			"DamageGain"				"6"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_dream_coil"
+					"AOE"				"1"
+					"Radius"			"300"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_phase_shift"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_jakiro.txt
+	//=================================================================================
+	// npc_dotahs_jakiro
+	//=================================================================================
+	"npc_dotahs_jakiro"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_jakiro"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_jakiro.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_ice_path"
+		"Ability2"					"dotahs_creature_macropyre"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"18"
+		"AttackDamageMax"			"26"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"400"
+		"ProjectileModel"			"particles/units/heroes/hero_jakiro/jakiro_base_attack.vpcf"
+		"ProjectileSpeed"			"1100"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"290"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"
+		"StatusHealthRegen"			"4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"20"
+					"Support"			"0"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"105"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_ice_path"
+					"AOE"				"1"
+					"Radius"			"700"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_macropyre"
+					"AOE"				"1"
+					"Radius"			"500"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_magnus.txt
+	//=================================================================================
+	// npc_dotahs_magnus
+	//=================================================================================
+	"npc_dotahs_magnus"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/magnataur/magnataur.vmdl"
+		"ModelScale"				"0.9"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_magnataur"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_magnataur.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_skewer"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4.1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"49"
+		"AttackDamageMax"			"61"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"12"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"700"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"180"
+			"DamageGain"				"11"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_skewer"
+					"AOE"				"1"
+					"Radius"			"650"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_nevermore.txt
+	//=================================================================================
+	// npc_dotahs_nevermore
+	//=================================================================================
+	"npc_dotahs_nevermore"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/nevermore/nevermore.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_nevermore"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_shadowraze1"
+		"Ability2"					"dotahs_creature_shadowraze2"
+		"Ability3"					"dotahs_creature_shadowraze3"
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"15"
+		"AttackDamageMax"			"21"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+		"ProjectileSpeed"			"1200"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"325"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"500"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"20"
+					"Support"			"0"
+					"RoamDistance"		"450"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"105"
+			"DamageGain"				"2"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_shadowraze1"
+					"AOE"				"1"
+					"Radius"			"200"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_shadowraze2"
+					"AOE"				"1"
+					"Radius"			"450"
+					"MinimumTargets"	"1"
+				}
+				"Ability3"
+				{
+					"Name"				"dotahs_creature_shadowraze3"
+					"AOE"				"1"
+					"Radius"			"700"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_nyxnyxnyx.txt
+	//=================================================================================
+	// npc_dotahs_nyxnyxnyx
+	//=================================================================================
+	"npc_dotahs_nyxnyxnyx"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/nerubian_assassin/nerubian_assassin.mdl"
+		"ModelScale"				"0.75"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_nyx_assassin"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_nyx_assassin.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_nyx_impale"
+		"Ability2"					"dotahs_creature_spiked_carapace"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"
+		"AttackDamageMax"			"34"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.46"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"10"
+					"Support"			"0"
+					"RoamDistance"		"450"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"120"
+			"DamageGain"				"7"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_nyx_impale"
+					"Damage"			"1"
+					"Stun"				"1"
+					"AOE"				"1"
+					"Radius"			"450"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_spiked_carapace"
+					"AOE"				"1"
+					"Radius"			"250"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_phoenix.txt
+	//=================================================================================
+	// npc_dotahs_phoenix
+	//=================================================================================
+	"npc_dotahs_phoenix"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/phoenix/phoenix_bird.vmdl"
+		"ModelScale"				"0.75"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_phoenix"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_phoenix.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_supernova"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"26"
+		"AttackDamageMax"			"36"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.35"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"300"
+		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
+		"ProjectileSpeed"			"1100"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"6"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"0"
+					"Support"			"0"
+					"RoamDistance"		"0"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"180"
+			"DamageGain"				"4"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_supernova"
+					"AOE"				"1"
+					"Radius"			"300"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_pudge.txt
+	//=================================================================================
+	// npc_dotahs_pudge
+	//=================================================================================
+	"npc_dotahs_pudge"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/pudge/pudge.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_pudge"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_pudge.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_meat_hook"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"27"
+		"AttackDamageMax"			"33"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"6"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			"DisableResistance"			"30"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"50"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"180"
+			"DamageGain"				"6"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_meat_hook"
+					"AOE"				"1"
+					"Radius"			"600"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_pugna.txt
+	//=================================================================================
+	// npc_dotahs_pugna
+	//=================================================================================
+	"npc_dotahs_pugna"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/pugna/pugna.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"model"					"models/heroes/pugna/pugna_ward.mdl"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_pugna"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_pugna.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_nether_ward"
+		"Ability2"					"dotahs_creature_life_drain"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"19"
+		"AttackDamageMax"			"27"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"600"
+		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"380"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1600"
+		"VisionNighttimeRange"		"1600"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"5"
+					"Support"			"0"
+					"RoamDistance"		"300"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"120"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_nether_ward"
+					"Damage"			"1"
+					"Debuff"			"1"
+					"AOE"				"1"
+					"Radius"			"1200"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_life_drain"
+					"Damage"			"1"
+					"AOE"				"1"
+					"Radius"			"300"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_rattletrap.txt
+	//=================================================================================
+	// npc_dotahs_rattletrap
+	//=================================================================================
+	"npc_dotahs_rattletrap"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/rattletrap/rattletrap.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"model"					"models/heroes/rattletrap/rattletrap_cog.mdl"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_rattletrap.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_rattletrap"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_rattletrap.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_rattletrap.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_power_cogs"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"31"
+		"AttackDamageMax"			"33"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"400"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"450"
+		"StatusHealthRegen"			"8"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			"DisableResistance"			"30"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"0"
+					"Support"			"0"
+					"RoamDistance"		"0"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"135"
+			"DamageGain"				"7"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_power_cogs"
+					"AOE"				"1"
+					"Radius"			"150"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_tusk.txt
+	//=================================================================================
+	// npc_dotahs_tusk
+	//=================================================================================
+	"npc_dotahs_tusk"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/tuskarr/tuskarr.vmdl"
+		"ModelScale"				"0.75"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_tusk"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_tusk.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_ice_shards"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"60"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.36"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"285"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"
+		"StatusHealthRegen"			"12"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"700"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"90"
+			"DamageGain"				"11"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_ice_shards"
+					"AOE"				"1"
+					"Radius"			"750"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// npc_dotahs_wisp.txt
+	//=================================================================================
+	// npc_dotahs_wisp
+	//=================================================================================
+	"npc_dotahs_wisp"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/wisp/wisp.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_wisp"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_wisp.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_spirits"
+		"Ability2"					"dotahs_creature_wisp_particle"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"
+		"AttackDamageMax"			"30"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.15"
+		"AttackAcquisitionRange"	"775"
+		"AttackRange"				"575"
+		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"
+		"StatusHealthRegen"			"5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"105"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_spirits"
+					"AOE"				"1"
+					"Radius"			"600"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}
+
+	// units_dotahs_chests.txt
+	"npc_dotahs_chest"
 	{
 		// General
 		//
@@ -52,9 +1923,9 @@
 		"VisionDaytimeRange"		"0"		// Range of vision during day light.
 		"VisionNighttimeRange"		"0"		// Range of vision at night time.
 	}
-	// units_dotarpg_hostages.txt
+	// units_dotahs_hostages.txt
 	
-	"npc_dotarpg_hostage"
+	"npc_dotahs_hostage"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -72,8 +1943,8 @@
 		//----------------------------------------------------------------
 	//	"AbilityLayout"				"6"		// changes when we change to flying -> "5"
 
-		"Ability1"					"dotarpg_hostage_default"			// Ability 1.
-		"Ability2"					"dotarpg_hostage_arrested"			// Ability 2.
+		"Ability1"					"dotahs_hostage_default"			// Ability 1.
+		"Ability2"					"dotahs_hostage_arrested"			// Ability 2.
 		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 		"Ability5"					""			// Ability 5.
@@ -130,136 +2001,6 @@
 		"WakesNeutrals"				"0"
 	}
 	
-	// units_dotarpg_monsters.txt
-	//=================================================================================
-	// Creature: Faerie Dragon 
-	//=================================================================================
-	"npc_dota_creature_faerie_dragon"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_creature"	// Class of entity of link to.
-		"Model"						"models/heroes/puck/puck.vmdl"	// Model.
-		"ModelScale"				"0.7"
-		"Level"						"1"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
-			"particle_folder"		"particles/units/heroes/hero_puck"
-		}
-		
-		// Abilities
-		//----------------------------------------------------------------
-		
-		"Ability1"					""//"creature_dream_coil"			// Ability 1.
-		"Ability2"					""//"creature_phase_shift"			// Ability 2.
-		"Ability3"					""			// Ability 3.
-		"Ability4"					""			// Ability 4.
-		"Ability5"					""			// Ability 5.
-		"Ability6"					""			// Ability 6 - Extra.
-		"Ability7"					""			// Ability 7 - Extra.
-		"Ability8"					""			// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"			// Physical protection.
-		"MagicalResistance"			"35"		// Magical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"47"		// Damage range min.
-		"AttackDamageMax"			"58"		// Damage range max.
-		"AttackRate"				"1.7"		// Speed of attack.
-		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"750"		// Range within a target can be acquired.
-		"AttackRange"				"550"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"						// Particle system model for projectile.
-		"ProjectileSpeed"			"900"			// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"25"		// Experience earn.
-		"BountyGoldMin"				"35"		// Gold earned min.
-		"BountyGoldMax"				"42"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"160"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"	
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"375"		// Speed
-		"MovementTurnRate"			"0.5"		// Turning rate.
-
-		
-		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_puck.vsndevts"
-	//	"VoiceFile"					"soundevents/voscripts/game_sounds_vo_puck.vsndevts"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"500"		// Base health.
-		"StatusHealthRegen"			"5.0"		// Health regeneration rate.
-		"StatusMana"				"500"			// Base mana.
-		"StatusManaRegen"			"0"			// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_BADGUYS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1400"		// Range of vision at night time.
-
-		// Creature Data
-		//----------------------------------------------------------------------------------------------------------------------
-		"Creature"
-		{
-			"CanRespawn"				"0"
-			"States"
-			{
-				"Invade"
-				{
-					"Name"				"Invade"
-					"Aggression"		"100.0"
-					"Avoidance"			"50.0"
-					"Support"			"0.0"
-					"RoamDistance"		"1000.0"
-				}
-			}
-
-			"DefaultState"				"Invade"
-			
-			"OffensiveAbilities"
-			{
-			//	"Ability1"				
-			//	{
-			//		"Name"				"creature_dream_coil"
-			//		"AOE"				"1"
-			//		"Radius"			"300"
-			//		"MinimumTargets"	"2"
-			//	}
-			}
-			
-			"EscapeAbilities"
-			{
-			//	"Ability1"				
-			//	{
-			//		"Name"				"creature_phase_shift"
-			//	}
-			}
-		}
-	}
 	// units_holdout_wave11.txt
 	// Wave 11: Danger Zone
 	//    8 x npc_dota_creature_missile_launcher
@@ -1515,14 +3256,6 @@
 					"Name"				"lesser_nightcrawler_pounce"
 					"Damage"			"1"
 					"Debuff"			"1"
-				}
-			}
-			
-			"EscapeAbilities"
-			{
-				"Ability1"				
-				{
-					"Name"				"lesser_nightcrawler_pounce"
 				}
 			}
 			

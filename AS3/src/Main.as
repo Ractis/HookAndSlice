@@ -12,6 +12,7 @@ package
 	import inventory.InventoryEvent;
 	import inventory.Item;
 	import inventory.ItemDetailPanel;
+	import voting.VotingPanel;
 	
 	public class Main extends MovieClip 
 	{
@@ -36,12 +37,12 @@ package
 		
 		private function _onMouseRollOut( e:MouseEvent ):void 
 		{
-			alpha = 0.5;
+			_inventory.alpha = 0.5;
 		}
 		
 		private function _onMouseRollOver( e:MouseEvent ):void 
 		{
-			alpha = 1.0;
+			_inventory.alpha = 1.0;
 		}
 		
 		// called by the game engine when this .swf has finished loading
@@ -56,29 +57,54 @@ package
 		//	showInventory();
 			_inventory.visible = false;
 			
-			// Add event listeners
-			_inventory.addEventListener( InventoryEvent.INVENTORY_SWAP, _onInventorySwap );
-			_inventory.addEventListener( InventoryEvent.INVENTORY_DROP, _onInventoryDrop );
+			var votingPanel:VotingPanel = new VotingPanel( gameAPI );
+			addChild( votingPanel );
+			votingPanel.x = 300;
+			votingPanel.y = 200;
 			
 			// Register game event listeners
-			gameAPI.SubscribeToGameEvent( "dotarpg_pickedup_item",			_onPickedupItem );
-			gameAPI.SubscribeToGameEvent( "dotarpg_dropped_item",			_onDroppedItem );
-			gameAPI.SubscribeToGameEvent( "dotarpg_add_item_to_slot",		_onAddItemToSlot );
-			gameAPI.SubscribeToGameEvent( "dotarpg_remove_item_from_slot",	_onRemoveItemFromSlot );
-			gameAPI.SubscribeToGameEvent( "dotarpg_change_item_charges",	_onChangeItemCharges );
-			gameAPI.SubscribeToGameEvent( "dotarpg_toggle_inventory",		_onToggleInventory );
-			gameAPI.SubscribeToGameEvent( "dotarpg_map_info",				_onMapInfo );
-			gameAPI.SubscribeToGameEvent( "dotarpg_map_data",				_onMapData );
+			gameAPI.SubscribeToGameEvent( "dotahs_clear_all_items",			_onClearAll );
+			gameAPI.SubscribeToGameEvent( "dotahs_pickedup_item",			_onPickedupItem );
+			gameAPI.SubscribeToGameEvent( "dotahs_dropped_item",			_onDroppedItem );
+			gameAPI.SubscribeToGameEvent( "dotahs_add_item_to_slot",		_onAddItemToSlot );
+			gameAPI.SubscribeToGameEvent( "dotahs_remove_item_from_slot",	_onRemoveItemFromSlot );
+			gameAPI.SubscribeToGameEvent( "dotahs_change_item_charges",	_onChangeItemCharges );
+			gameAPI.SubscribeToGameEvent( "dotahs_toggle_inventory",		_onToggleInventory );
+			gameAPI.SubscribeToGameEvent( "dotahs_map_info",				_onMapInfo );
+			gameAPI.SubscribeToGameEvent( "dotahs_map_data",				_onMapData );
 		}
 		
 		private function _onInventorySwap( e:InventoryEvent ):void 
 		{
-			gameAPI.SendServerCommand( "dotarpg_inventory_swap " + e.slotName1 + " " + e.slotName2 );
+			gameAPI.SendServerCommand( "dotahs_inventory_swap " + e.slotName1 + " " + e.slotName2 );
 		}
 		
 		private function _onInventoryDrop( e:InventoryEvent ):void 
 		{
-			gameAPI.SendServerCommand( "dotarpg_inventory_drop " + e.slotName1 );
+			gameAPI.SendServerCommand( "dotahs_inventory_drop " + e.slotName1 );
+		}
+		
+		private function _onClearAll( eventData:Object ):void
+		{
+			_log( "========================================" );
+			_log( "  onClearAll" );
+			_log( "" );
+			
+			// Reset items
+			_itemMap = new Dictionary();
+			
+			// Reset intentory
+			if ( _inventory ) {
+				removeChild( _inventory );
+			}
+			
+			_inventory = new Inventory();
+			_inventory.visible = false;
+			addChild( _inventory );
+			_inventory.y = 50;
+			
+			_inventory.addEventListener( InventoryEvent.INVENTORY_SWAP, _onInventorySwap );
+			_inventory.addEventListener( InventoryEvent.INVENTORY_DROP, _onInventoryDrop );
 		}
 		
 		private function _onAddItemToSlot( eventData:Object ):void 

@@ -1,0 +1,145 @@
+	//=================================================================================
+	// npc_dotahs_jakiro
+	//=================================================================================
+	"npc_dotahs_jakiro"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/twin_headed_dragon/twin_headed_dragon.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_jakiro"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_jakiro.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_ice_path"
+		"Ability2"					"dotahs_creature_macropyre"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"18"
+		"AttackDamageMax"			"26"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"400"
+		"ProjectileModel"			"particles/units/heroes/hero_jakiro/jakiro_base_attack.vpcf"
+		"ProjectileSpeed"			"1100"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"290"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"
+		"StatusHealthRegen"			"4"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"20"
+					"Support"			"0"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"105"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_ice_path"
+					"AOE"				"1"
+					"Radius"			"700"
+					"MinimumTargets"	"1"
+				}
+				"Ability2"
+				{
+					"Name"				"dotahs_creature_macropyre"
+					"AOE"				"1"
+					"Radius"			"500"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}

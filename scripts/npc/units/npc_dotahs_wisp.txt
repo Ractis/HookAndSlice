@@ -1,0 +1,138 @@
+	//=================================================================================
+	// npc_dotahs_wisp
+	//=================================================================================
+	"npc_dotahs_wisp"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/wisp/wisp.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_wisp"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_wisp.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_spirits"
+		"Ability2"					"dotahs_creature_wisp_particle"
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"-2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"20"
+		"AttackDamageMax"			"30"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.15"
+		"AttackAcquisitionRange"	"775"
+		"AttackRange"				"575"
+		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"
+		"StatusHealthRegen"			"5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"600"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"105"
+			"DamageGain"				"3"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_spirits"
+					"AOE"				"1"
+					"Radius"			"600"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}

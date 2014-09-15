@@ -88,7 +88,7 @@
 		// Wolf & Ogre + Slithereen
 		"monster_pool_4"
 		{
-		//	"npc_dota_creature_lesser_nightcrawler"		"500"
+			"npc_dota_creature_lesser_nightcrawler"		"500"
 			"npc_dota_creature_slithereen"
 			{
 				"Weight"		"125 150 175"

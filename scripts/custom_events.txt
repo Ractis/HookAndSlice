@@ -20,7 +20,11 @@
 
 "CustomEvents"
 {
-	"dotarpg_pickedup_item"
+	"dotahs_clear_all_items"
+	{
+	}
+
+	"dotahs_pickedup_item"
 	{
 		"playerID"			"short"
 		"itemID"			"long"
@@ -33,38 +37,51 @@
 		"itemAdditionalProperties"	"string"
 	}
 
-	"dotarpg_dropped_item"
+	"dotahs_dropped_item"
 	{
 		"playerID"			"short"
 		"itemID"			"long"
 	}
 
-	"dotarpg_add_item_to_slot"
-	{
-		"playerID"			"short"
-		"itemID"			"long"
-		"slotName"			"string"
-	}
-
-	"dotarpg_remove_item_from_slot"
+	"dotahs_add_item_to_slot"
 	{
 		"playerID"			"short"
 		"itemID"			"long"
 		"slotName"			"string"
 	}
 
-	"dotarpg_change_item_charges"
+	"dotahs_remove_item_from_slot"
+	{
+		"playerID"			"short"
+		"itemID"			"long"
+		"slotName"			"string"
+	}
+
+	"dotahs_change_item_charges"
 	{
 		"itemID"		"long"
 		"itemCharges"	"short"
 	}
 
-	"dotarpg_toggle_inventory"
+	"dotahs_toggle_inventory"
 	{
 		"playerID"	"short"
 	}
+	
+	"dotahs_restart_vote_begin"
+	{
+	}
+	
+	"dotahs_restart_vote_end"
+	{
+	}
+	
+	"dotahs_restart_vote"
+	{
+		"wantRestart"	"bool"
+	}
 
-	"dotarpg_map_info"
+	"dotahs_map_info"
 	{
 		"minX"	"short"
 		"maxX"	"short"
@@ -72,7 +89,7 @@
 		"maxY"	"short"
 	}
 
-	"dotarpg_map_data"
+	"dotahs_map_data"
 	{
 		"posY"	"short"
 		"data"	"string"

@@ -1,0 +1,138 @@
+	//=================================================================================
+	// npc_dotahs_magnus
+	//=================================================================================
+	"npc_dotahs_magnus"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/magnataur/magnataur.vmdl"
+		"ModelScale"				"0.9"
+		"Level"						"1"
+
+		// Precache
+		//----------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle_folder"		"particles/units/heroes/hero_magnataur"
+		}
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"VoiceFile"					"soundevents/voscripts/game_sounds_vo_magnataur.vsndevts"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"dotahs_creature_skewer"
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4.1"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"49"
+		"AttackDamageMax"			"61"
+		"AttackRate"				"1.7"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"128"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"25"
+		"BountyGoldMin"				"35"
+		"BountyGoldMax"				"42"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"160"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"375"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"
+		"StatusHealthRegen"			"12"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+
+			// Basic AI State
+			//-----------------------------------------------------------------
+			"States"
+			{
+				"Invade"
+				{
+					"Name"				"Invade"
+					"Aggression"		"100"
+					"Avoidance"			"50"
+					"Support"			"0"
+					"RoamDistance"		"700"
+				}
+			}
+
+			"DefaultState"				"Invade"
+
+			// Level Up Parameters
+			//-----------------------------------------------------------------
+			"HPGain"					"180"
+			"DamageGain"				"11"
+			"ArmorGain"					"0"
+			"MagicResistGain"			"0"
+			"MoveSpeedGain"				"0"
+			"BountyGain"				"0"
+			"XPGain"					"0"
+
+			// Ability Usage Parameters
+			//-----------------------------------------------------------------
+			"OffensiveAbilities"
+			{
+				"Ability1"
+				{
+					"Name"				"dotahs_creature_skewer"
+					"AOE"				"1"
+					"Radius"			"650"
+					"MinimumTargets"	"1"
+				}
+			}
+
+			"DefensiveAbilities"
+			{
+			}
+		}
+	}

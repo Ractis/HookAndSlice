@@ -118,7 +118,7 @@ package inventory
 		
 		public static function _createTestItem():Item
 		{
-			// dotarpg_pickedup_item
+			// dotahs_pickedup_item
 			var itemData:Object = {
 				itemID : -1,
 				itemName : "item_blades_of_attack",

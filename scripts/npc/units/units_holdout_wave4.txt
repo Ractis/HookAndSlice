@@ -112,14 +112,6 @@
 				}
 			}
 			
-			"EscapeAbilities"
-			{
-				"Ability1"				
-				{
-					"Name"				"lesser_nightcrawler_pounce"
-				}
-			}
-			
 			"AttachWearables"
 			{
 				"Wearable1"

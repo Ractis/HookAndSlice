@@ -1,11 +1,14 @@
 package  
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
+	import flash.display.MovieClip;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import flash.utils.getDefinitionByName;
 	
 	/**
 	 * ...
@@ -13,6 +16,41 @@ package
 	 */
 	public class Utils 
 	{
+		
+		// http://yrrep.me/dota/flash-components.php
+		public static function replaceWithValveComponent( disp:DisplayObjectContainer, type:String, keepDimensions:Boolean = false ):MovieClip
+		{
+			var parent:DisplayObjectContainer = disp.parent;
+			var oldX:Number = disp.x;
+			var oldY:Number = disp.y;
+			var oldWidth:Number = disp.width;
+			var oldHeight:Number = disp.height;
+			
+			var newObjectClass:Class;
+			try
+			{
+				newObjectClass = getDefinitionByName( type ) as Class;
+			}
+			catch ( error : ReferenceError )
+			{
+				trace( "[replaceWithValveComponent] " + type + " is not found" );
+				return null;
+			}
+			
+			var newObject:MovieClip = new newObjectClass();
+			newObject.x = oldX;
+			newObject.y = oldY;
+			if ( keepDimensions )
+			{
+				newObject.width = oldWidth;
+				newObject.height = oldHeight;
+			}
+			
+			parent.removeChild( disp );
+			parent.addChild( newObject );
+			
+			return newObject;
+		}
 		
 		public static function CreateLabel( text:String, fontType:String ):TextField
 		{
@@ -42,7 +80,7 @@ package
 		
 		static public function Log( ...rest ):void 
 		{
-			trace( "[DotaRPG] " + rest );
+			trace( "[DotaHS] " + rest );
 		}
 		
 	}

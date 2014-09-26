@@ -71,7 +71,7 @@
 		// Kobolds & HillTrolls + Zombies
 		"monster_pool_1"
 		{
-		//	"npc_dotahs_rattletrap"
+		//	"npc_dota_creature_snow_creep_melee"
 		//	{
 		//		"Weight"		"999999999"
 		//		"Level"			"1"

@@ -9,6 +9,7 @@ require( "DotaHS_GridNavMap" )
 require( "DotaHS_SpawnManager" )
 require( "DotaHS_SpawnDirector" )
 require( "DotaHS_MissionManager_RescueHostage" )
+require( "DotaHS_MissionManager_CustomLevel" )
 require( "DotaHS_Quest" )
 
 require( "Util_Serialize" )
@@ -88,7 +89,7 @@ function DotaHS:InitGameMode()
 	end, "", FCVAR_CHEAT )
 
 	Convars:RegisterCommand( "dotahs_revive_all", function ( _ )
-		self:_RefreshPlayers()
+		DotaHS_RefreshPlayers()
 	end, "", FCVAR_CHEAT )
 
 	Convars:RegisterCommand( "dotahs_kill_player", function ( _, playerID )
@@ -109,7 +110,13 @@ function DotaHS:InitGameMode()
 	SpawnDirector:PreInitialize()
 
 	if type(self._vGameConfiguration.RescueHostage) == "table" then
+		self._bRescueHostage = true
 		MissionManager_RescueHostage:PreInitialize()
+	end
+
+	if type(self._vGameConfiguration.CustomLevel) == "table" then
+		self._bCustomLevel = true
+		MissionManager_CustomLevel:PreInitialize( self._vGameConfiguration )
 	end
 
 end
@@ -155,18 +162,20 @@ function DotaHS:OnThink()
 		return DotaHS.DeltaTime
 	end
 
-	if self._nGameEndState == NOT_ENDED then
-		self:_CheckForDefeat()
-		self:_CheckForVictory()
-	end
-
 	-- Safe guard catching any state that may exist beyond DOTA_GAMERULES_STATE_POST_GAME
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
 	end
 
-	self:_ApplyCooldownReduction()
-	self:_ValidatePlayerMovement()
+	if self._nGameEndState == NOT_ENDED then
+		self:_CheckForDefeat()
+		self:_CheckForVictory()
+	end
+
+	if DotaHS_GlobalVars.bGameInProgress then
+		self:_ApplyCooldownReduction()
+		self:_ValidatePlayerMovement()
+	end
 
 	return DotaHS.DeltaTime
 
@@ -641,39 +650,28 @@ function DotaHS:OnGameRulesStateChange()
 
 		-- Initialize modules
 		ItemManager:Initialize()
-		GridNavMap:Initialize( self._vGameConfiguration )
-		SpawnManager:Initialize( self._vGameConfiguration )
-		SpawnDirector:Initialize( self._vGameConfiguration )
 
-		-- RescueHostage gamemode
-		if type(self._vGameConfiguration.RescueHostage) == "table" then
-			MissionManager_RescueHostage:Initialize( self._vGameConfiguration.RescueHostage )
-		end
+		if not self._bCustomLevel then
+			GridNavMap:Initialize( self._vGameConfiguration )
+			SpawnManager:Initialize( self._vGameConfiguration )
+			SpawnDirector:Initialize( self._vGameConfiguration )
 
-		-- Begin the game
-		DotaHS_GlobalVars.bGameInProgress = true
-
-		if DEBUG then
-			for i=1, 25 do
-				ItemManager:CreateLoot( Vector(109, 157, 256+1) )
+			-- RescueHostage gamemode
+			if self._bRescueHostage then
+				MissionManager_RescueHostage:Initialize( self._vGameConfiguration.RescueHostage )
 			end
-		end
-	end
-end
 
---------------------------------------------------------------------------------
-function DotaHS:_RefreshPlayers()
-	for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then
-			if PlayerResource:HasSelectedHero( nPlayerID ) then
-				local hero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
-				if not hero:IsAlive() then
-					hero:RespawnUnit()
-				end
-				hero:SetHealth( hero:GetMaxHealth() )
-				hero:SetMana( hero:GetMaxMana() )
-			end
+			DotaHS_GlobalVars.bGameInProgress = true
+		else
+			-- CustomLevel gamemode
+			MissionManager_CustomLevel:Initialize( self._vGameConfiguration )
 		end
+
+	--	if DEBUG then
+	--		for i=1, 25 do
+	--			ItemManager:CreateLoot( Vector(109, 157, 256+1) )
+	--		end
+	--	end
 	end
 end
 

@@ -1,8 +1,10 @@
 package 
 {
+	import customLevelEditor.CustomLevelEditor;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -10,11 +12,12 @@ package
 	import gridNav.MapViewer;
 	import inventory.Inventory;
 	import inventory.InventoryEvent;
+	import inventory.InventoryManager;
 	import inventory.Item;
 	import inventory.ItemDetailPanel;
 	import voting.VotingPanel;
 	
-	public class Main extends MovieClip 
+	public class Main extends MovieClip implements IDotaAPI
 	{
 		// element details filled out by game engine
 		public var gameAPI:Object;
@@ -23,183 +26,59 @@ package
 		
 		private var _tfTest:TextField;
 		
-		private var _itemMap:Dictionary = new Dictionary();
-		private var _inventory:Inventory;
 		private var _mapViewer:MapViewer;
+		
+		// Modules
+		private var _inventoryManager:InventoryManager;
+		private var _customLevelEditor:CustomLevelEditor;
 		
 		public function Main():void
 		{
-			showInventory();
-			
-			addEventListener( MouseEvent.ROLL_OVER, _onMouseRollOver );
-			addEventListener( MouseEvent.ROLL_OUT, _onMouseRollOut );
+			if (stage) init();
+			else addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
-		private function _onMouseRollOut( e:MouseEvent ):void 
+		private function init(e:Event = null):void 
 		{
-			_inventory.alpha = 0.5;
-		}
-		
-		private function _onMouseRollOver( e:MouseEvent ):void 
-		{
-			_inventory.alpha = 1.0;
+			try
+			{
+				trace( "DotaHS GUI Initializing." );
+				
+				// Create modules
+				addChild( _inventoryManager = new InventoryManager() );
+				addChild( _customLevelEditor = new CustomLevelEditor() );
+			}
+			catch ( e:Error )
+			{
+				Utils.LogError( e );
+			}
 		}
 		
 		// called by the game engine when this .swf has finished loading
 		public function onLoaded():void
 		{
-			_log( "========================================" );
-			_log( "  Initializing ..." );
-			_log( "========================================" );
-			
-			// Show the UI
-			visible = true;
-		//	showInventory();
-			_inventory.visible = false;
-			
-			var votingPanel:VotingPanel = new VotingPanel( gameAPI );
-			addChild( votingPanel );
-			votingPanel.x = 300;
-			votingPanel.y = 200;
-			
-			// Register game event listeners
-			gameAPI.SubscribeToGameEvent( "dotahs_clear_all_items",			_onClearAll );
-			gameAPI.SubscribeToGameEvent( "dotahs_pickedup_item",			_onPickedupItem );
-			gameAPI.SubscribeToGameEvent( "dotahs_dropped_item",			_onDroppedItem );
-			gameAPI.SubscribeToGameEvent( "dotahs_add_item_to_slot",		_onAddItemToSlot );
-			gameAPI.SubscribeToGameEvent( "dotahs_remove_item_from_slot",	_onRemoveItemFromSlot );
-			gameAPI.SubscribeToGameEvent( "dotahs_change_item_charges",	_onChangeItemCharges );
-			gameAPI.SubscribeToGameEvent( "dotahs_toggle_inventory",		_onToggleInventory );
-			gameAPI.SubscribeToGameEvent( "dotahs_map_info",				_onMapInfo );
-			gameAPI.SubscribeToGameEvent( "dotahs_map_data",				_onMapData );
-		}
-		
-		private function _onInventorySwap( e:InventoryEvent ):void 
-		{
-			gameAPI.SendServerCommand( "dotahs_inventory_swap " + e.slotName1 + " " + e.slotName2 );
-		}
-		
-		private function _onInventoryDrop( e:InventoryEvent ):void 
-		{
-			gameAPI.SendServerCommand( "dotahs_inventory_drop " + e.slotName1 );
-		}
-		
-		private function _onClearAll( eventData:Object ):void
-		{
-			_log( "========================================" );
-			_log( "  onClearAll" );
-			_log( "" );
-			
-			// Reset items
-			_itemMap = new Dictionary();
-			
-			// Reset intentory
-			if ( _inventory ) {
-				removeChild( _inventory );
-			}
-			
-			_inventory = new Inventory();
-			_inventory.visible = false;
-			addChild( _inventory );
-			_inventory.y = 50;
-			
-			_inventory.addEventListener( InventoryEvent.INVENTORY_SWAP, _onInventorySwap );
-			_inventory.addEventListener( InventoryEvent.INVENTORY_DROP, _onInventoryDrop );
-		}
-		
-		private function _onAddItemToSlot( eventData:Object ):void 
-		{
-			_log( "========================================" );
-			_log( "  onAddItemToSlot" );
-			_log( "" );
-			
-			_log( "Local Player ID = " + localPlayerID )
-			_log( "Player ID = " + eventData.playerID );
-			
-			if ( eventData.playerID != localPlayerID ) return;
-			
-			var item:Item = _itemMap[eventData.itemID];
-			if ( !item ) {
-				_log( "Item[" + eventData.itemID + "] is null" );
-				return;
-			}
-			
-			_inventory.addItem( item, eventData.slotName );
-		}
-		
-		private function _onRemoveItemFromSlot( eventData:Object ):void 
-		{
-			_log( "========================================" );
-			_log( "  onRemoveItemFromSlot" );
-			_log( "" );
-			
-			if ( eventData.playerID != localPlayerID ) return;
-			
-			var item:Item = _itemMap[eventData.itemID];
-			if ( !item ) {
-				_log( "Item[" + eventData.itemID + "] is null" );
-				return;
-			}
-			
-			_inventory.removeItem( item, eventData.slotName );
-		}
-		
-		private function _onPickedupItem( eventData:Object ):void 
-		{
-			_log( "========================================" );
-			_log( "  onPickedupItem" );
-			_log( "" );
-			
-			_log( "Player ID : " + eventData.playerID );
-			_log( "Item ID : " + eventData.itemID );
-			_log( "Item name : " + eventData.itemName );
-			
-			var item:Item = new Item( eventData );
-			_itemMap[eventData.itemID] = item;
-		}
-		
-		private function _onDroppedItem( eventData:Object ):void 
-		{
-			_log( "========================================" );
-			_log( "  onDroppedItem" );
-			_log( "" );
-			
-			_log( "Player ID : " + eventData.playerID );
-			_log( "Item ID : " + eventData.itemID );
-			
-			var item:Item = _itemMap[eventData.itemID];
-			if ( !item ) {
-				_log( "Item[" + eventData.itemID + "] is null" );
-				return;
-			}
-			
-			item.kill();
-			_itemMap[eventData.itemID] = null;
-		}
-		
-		private function _onChangeItemCharges( eventData:Object ):void
-		{
-			_log( "========================================" );
-			_log( "  onChangeItemCharges" );
-			_log( "" );
-			
-			_log( "Item ID : " + eventData.itemID );
-			
-			var item:Item = _itemMap[eventData.itemID];
-			if ( !item ) {
-				_log( "Item[" + eventData.itemID + "] is null" );
-				return;
-			}
-			
-			item.itemCharges = eventData.itemCharges;
-		}
-		
-		private function _onToggleInventory( eventData:Object ):void
-		{
-			if ( eventData.playerID == localPlayerID )
-			{
-				// Toggle Inventory
-				_inventory.visible = !_inventory.visible;
+			try {
+				_log( "========================================" );
+				_log( "  Initializing ..." );
+				_log( "========================================" );
+				
+				// Show the UI
+				visible = true;
+				
+				// Initialize modules
+				_inventoryManager.onLoaded( this );
+				_customLevelEditor.onLoaded( this );
+				
+				var votingPanel:VotingPanel = new VotingPanel( gameAPI );
+				addChild( votingPanel );
+				votingPanel.x = 300;
+				votingPanel.y = 200;
+				
+				// Register game event listeners
+			//	gameAPI.SubscribeToGameEvent( "dotahs_map_info",	_onMapInfo );
+			//	gameAPI.SubscribeToGameEvent( "dotahs_map_data",	_onMapData );
+			} catch ( e:Error ) {
+				Utils.LogError( e );
 			}
 		}
 		
@@ -250,18 +129,6 @@ package
 			_log( "POST UPDATE ROW" );
 		}
 		
-		private function showInventory():void 
-		{
-			// Create inventory
-			_inventory = new Inventory();
-			addChild( _inventory );
-			_inventory.y = 50;
-			
-		//	_inventory.addItemToBackpack( Item._createTestItem(), 3 );
-		//	_inventory.addItemToBackpack( Item._createTestItem(), 5 );
-		//	_inventory.addItemToBackpack( Item._createTestItem(), 12 );
-		}
-		
 		// called by the game engine after onLoaded and whenever the screen size is changed
 		public function onScreenSizeChanged():void
 		{
@@ -270,6 +137,17 @@ package
 		private function _log( ...rest ):void
 		{
 			Utils.Log( rest );
+		}
+		
+		public function SubscribeToGameEvent( eventName:String, callback:Function ):void
+		{
+			gameAPI.SubscribeToGameEvent( eventName, callback );
+		}
+		
+		public function SendServerCommand( command:String ):void
+		{
+			// command.length <= 512
+			gameAPI.SendServerCommand( command );
 		}
 		
 		public function get localPlayerID():int

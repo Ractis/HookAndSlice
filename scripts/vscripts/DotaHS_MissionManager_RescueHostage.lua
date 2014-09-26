@@ -55,7 +55,7 @@ function MissionManager_RescueHostage:Initialize( kv )
 
 	-- Spawn Hostages
 	local numHostagesToSpawn = DotaHS_GetDifficultyValue( kv.NumHostages )
-	self:_RegisterHostages( self:_SpawnHostages( self._vHostageSpawnEntAry, numHostagesToSpawn ) )
+	self:_RegisterHostages( self:_SpawnHostages( {unpack(self._vHostageSpawnEntAry)}, numHostagesToSpawn ) )
 
 	-- Dynamic values
 	self.vChangeMonsterPool				= kv.ChangeMonsterPool

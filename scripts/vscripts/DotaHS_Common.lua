@@ -42,6 +42,21 @@ function DotaHS_NumPlayers()
 	return nPlayers
 end
 
+function DotaHS_RefreshPlayers()
+	for nPlayerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+		if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS then
+			if PlayerResource:HasSelectedHero( nPlayerID ) then
+				local hero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
+				if not hero:IsAlive() then
+					hero:RespawnUnit()
+				end
+				hero:SetHealth( hero:GetMaxHealth() )
+				hero:SetMana( hero:GetMaxMana() )
+			end
+		end
+	end
+end
+
 function DotaHS_GetDifficultyValue( value )
 	local normal, hard, insane = string.match( value, "(%d+) (%d+) (%d+)" )
 	if normal and hard and insane then

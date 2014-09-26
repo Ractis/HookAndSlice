@@ -1,0 +1,344 @@
+"AllMonsterList"
+{
+	"Count"	"49"
+
+	"1"
+	{
+		"Name"			"npc_dota_neutral_kobold"
+		"Category"		"Neutrals"
+		"Subcategory"	"Kobold"
+		"FixedLevel"	"1"
+	}
+	"2"
+	{
+		"Name"			"npc_dota_neutral_kobold_tunneler"
+		"Category"		"Neutrals"
+		"Subcategory"	"Kobold"
+		"FixedLevel"	"1"
+	}
+	"3"
+	{
+		"Name"			"npc_dota_neutral_kobold_taskmaster"
+		"Category"		"Neutrals"
+		"Subcategory"	"Kobold"
+		"FixedLevel"	"2"
+	}
+	"4"
+	{
+		"Name"			"npc_dota_neutral_forest_troll_berserker"
+		"Category"		"Neutrals"
+		"Subcategory"	"Hill Troll"
+		"FixedLevel"	"2"
+	}
+	"5"
+	{
+		"Name"			"npc_dota_neutral_forest_troll_high_priest"
+		"Category"		"Neutrals"
+		"Subcategory"	"Hill Troll"
+		"FixedLevel"	"2"
+	}
+	"6"
+	{
+		"Name"			"npc_dota_neutral_gnoll_assassin"
+		"Category"		"Neutrals"
+		"Subcategory"	"Vhoul Assassin"
+		"FixedLevel"	"2"
+	}
+	"7"
+	{
+		"Name"			"npc_dota_neutral_fel_beast"
+		"Category"		"Neutrals"
+		"Subcategory"	"Ghost"
+		"FixedLevel"	"2"
+	}
+	"8"
+	{
+		"Name"			"npc_dota_neutral_ghost"
+		"Category"		"Neutrals"
+		"Subcategory"	"Ghost"
+		"FixedLevel"	"3"
+	}
+	"9"
+	{
+		"Name"			"npc_dota_neutral_harpy_scout"
+		"Category"		"Neutrals"
+		"Subcategory"	"Harpy"
+		"FixedLevel"	"2"
+	}
+	"10"
+	{
+		"Name"			"npc_dota_neutral_harpy_storm"
+		"Category"		"Neutrals"
+		"Subcategory"	"Harpy"
+		"FixedLevel"	"3"
+	}
+	"11"
+	{
+		"Name"			"npc_dota_neutral_giant_wolf"
+		"Category"		"Neutrals"
+		"Subcategory"	"Wolf"
+		"FixedLevel"	"3"
+	}
+	"12"
+	{
+		"Name"			"npc_dota_neutral_alpha_wolf"
+		"Category"		"Neutrals"
+		"Subcategory"	"Wolf"
+		"FixedLevel"	"4"
+	}
+	"13"
+	{
+		"Name"			"npc_dota_neutral_ogre_mauler"
+		"Category"		"Neutrals"
+		"Subcategory"	"Ogre"
+		"FixedLevel"	"2"
+	}
+	"14"
+	{
+		"Name"			"npc_dota_neutral_ogre_magi"
+		"Category"		"Neutrals"
+		"Subcategory"	"Ogre"
+		"FixedLevel"	"3"
+	}
+	"15"
+	{
+		"Name"			"npc_dota_neutral_mud_golem"
+		"Category"		"Neutrals"
+		"Subcategory"	"Golem"
+		"FixedLevel"	"5"
+	}
+	"16"
+	{
+		"Name"			"npc_dota_neutral_centaur_outrunner"
+		"Category"		"Neutrals"
+		"Subcategory"	"Centaur"
+		"FixedLevel"	"2"
+	}
+	"17"
+	{
+		"Name"			"npc_dota_neutral_centaur_khan"
+		"Category"		"Neutrals"
+		"Subcategory"	"Centaur"
+		"FixedLevel"	"5"
+	}
+	"18"
+	{
+		"Name"			"npc_dota_neutral_satyr_trickster"
+		"Category"		"Neutrals"
+		"Subcategory"	"Satyr"
+		"FixedLevel"	"2"
+	}
+	"19"
+	{
+		"Name"			"npc_dota_neutral_satyr_soulstealer"
+		"Category"		"Neutrals"
+		"Subcategory"	"Satyr"
+		"FixedLevel"	"4"
+	}
+	"20"
+	{
+		"Name"			"npc_dota_neutral_satyr_hellcaller"
+		"Category"		"Neutrals"
+		"Subcategory"	"Satyr"
+		"FixedLevel"	"6"
+	}
+	"21"
+	{
+		"Name"			"npc_dota_neutral_polar_furbolg_champion"
+		"Category"		"Neutrals"
+		"Subcategory"	"Hellbear"
+		"FixedLevel"	"4"
+	}
+	"22"
+	{
+		"Name"			"npc_dota_neutral_polar_furbolg_ursa_warrior"
+		"Category"		"Neutrals"
+		"Subcategory"	"Hellbear"
+		"FixedLevel"	"5"
+	}
+	"23"
+	{
+		"Name"			"npc_dota_neutral_wildkin"
+		"Category"		"Neutrals"
+		"Subcategory"	"Wildwing"
+		"FixedLevel"	"1"
+	}
+	"24"
+	{
+		"Name"			"npc_dota_neutral_enraged_wildkin"
+		"Category"		"Neutrals"
+		"Subcategory"	"Wildwing"
+		"FixedLevel"	"5"
+	}
+	"25"
+	{
+		"Name"			"npc_dota_neutral_dark_troll"
+		"Category"		"Neutrals"
+		"Subcategory"	"Troll"
+		"FixedLevel"	"3"
+	}
+	"26"
+	{
+		"Name"			"npc_dota_neutral_dark_troll_warlord"
+		"Category"		"Neutrals"
+		"Subcategory"	"Troll"
+		"FixedLevel"	"6"
+	}
+	"27"
+	{
+		"Name"			"npc_dota_creature_basic_zombie"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave2"
+	}
+	"28"
+	{
+		"Name"			"npc_dota_creature_basic_zombie_exploding"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave2"
+		"Intensity"		"1"
+	}
+	"29"
+	{
+		"Name"			"npc_dota_creature_corpselord"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave2"
+		"Intensity"		"1"
+	}
+	"30"
+	{
+		"Name"			"npc_dota_creature_lesser_nightcrawler"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave4"
+	}
+	"31"
+	{
+		"Name"			"npc_dota_creature_slithereen"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave4"
+		"Intensity"		"1"
+	}
+	"32"
+	{
+		"Name"			"npc_dota_creature_mini_roshan"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave7"
+		"Intensity"		"1"
+	}
+	"33"
+	{
+		"Name"			"npc_dota_creature_tormented_soul"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave7"
+		"Intensity"		"1"
+	}
+	"34"
+	{
+		"Name"			"npc_dota_creature_missile_launcher"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave11"
+		"Intensity"		"1"
+	}
+	"35"
+	{
+		"Name"			"npc_dota_creature_minor_lich"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave12"
+		"Intensity"		"1"
+	}
+	"36"
+	{
+		"Name"			"npc_dota_creature_snow_creep_melee"
+		"Category"		"Holdout"
+		"Subcategory"	"Wave12"
+	}
+	"37"
+	{
+		"Name"			"npc_dotahs_bane"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+	}
+	"38"
+	{
+		"Name"			"npc_dotahs_dazzle"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+		"Intensity"		"1"
+	}
+	"39"
+	{
+		"Name"			"npc_dotahs_faerie_dragon"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+		"Intensity"		"1"
+	}
+	"40"
+	{
+		"Name"			"npc_dotahs_jakiro"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+		"Intensity"		"1"
+	}
+	"41"
+	{
+		"Name"			"npc_dotahs_magnus"
+		"Category"		"DotaHS"
+		"Subcategory"	"Strength"
+		"Intensity"		"1"
+	}
+	"42"
+	{
+		"Name"			"npc_dotahs_nevermore"
+		"Category"		"DotaHS"
+		"Subcategory"	"Agility"
+		"Intensity"		"1"
+	}
+	"43"
+	{
+		"Name"			"npc_dotahs_nyxnyxnyx"
+		"Category"		"DotaHS"
+		"Subcategory"	"Agility"
+		"Intensity"		"1"
+	}
+	"44"
+	{
+		"Name"			"npc_dotahs_phoenix"
+		"Category"		"DotaHS"
+		"Subcategory"	"Strength"
+		"Intensity"		"1"
+	}
+	"45"
+	{
+		"Name"			"npc_dotahs_pudge"
+		"Category"		"DotaHS"
+		"Subcategory"	"Strength"
+		"Intensity"		"1"
+	}
+	"46"
+	{
+		"Name"			"npc_dotahs_pugna"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+		"Intensity"		"1"
+	}
+	"47"
+	{
+		"Name"			"npc_dotahs_rattletrap"
+		"Category"		"DotaHS"
+		"Subcategory"	"Strength"
+		"Intensity"		"1"
+	}
+	"48"
+	{
+		"Name"			"npc_dotahs_tusk"
+		"Category"		"DotaHS"
+		"Subcategory"	"Strength"
+		"Intensity"		"1"
+	}
+	"49"
+	{
+		"Name"			"npc_dotahs_wisp"
+		"Category"		"DotaHS"
+		"Subcategory"	"Intellect"
+		"Intensity"		"1"
+	}
+}

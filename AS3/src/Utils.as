@@ -83,6 +83,12 @@ package
 			trace( "[DotaHS] " + rest );
 		}
 		
+		static public function LogError( e:Error ):void 
+		{
+			Log( e.message );
+			Log( "\n" + e.getStackTrace() );
+		}
+		
 	}
 
 }

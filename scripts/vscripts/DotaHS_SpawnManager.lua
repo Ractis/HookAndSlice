@@ -53,6 +53,9 @@ function SpawnManager:Initialize( kv )
 	self._flHealthMultiplier		= DotaHS_GetPartyDifficultyValue( kv.EnemyHPMultiplierSolo, kv.EnemyHPMultiplierGain )
 	self._nDesiredEnemies			= DotaHS_GetPartyDifficultyValue( kv.DesiredEnemiesSolo, kv.DesiredEnemiesGain )
 
+	self._flHealthMultiplier = self._flHealthMultiplier * kv.EnemyHPMultiplier
+	self._nDesiredEnemies = math.ceil( self._nDesiredEnemies * kv.DesiredEnemyDensity )
+
 	self:_Log( "Horde Group = " .. self._nHordeGroupMin .. " to " .. self._nHordeGroupMax )
 	self:_Log( "Horde Size = " .. self._nHordeSizeMin .. " to " .. self._nHordeSizeMax )
 	self:_Log( "Rare Monster Chance = " .. self._nRareMonsterChance )

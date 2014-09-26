@@ -33,7 +33,7 @@ local PriorityQueue			= {}	-- Class
 --------------------------------------------------------------------------------
 -- Pre-Initialize
 --------------------------------------------------------------------------------
-function GridNavMap:PreInitialize( kv )
+function GridNavMap:PreInitialize( kv, newStartEntity )
 
 	profile_begin( "GridNavMap:PreInitialize" )
 
@@ -49,7 +49,7 @@ function GridNavMap:PreInitialize( kv )
 	self:_Log( "  Max = ( " .. self.gridMaxX .. ", " .. self.gridMaxY .. " )" )
 
 	-- Find player start
-	local startEnt = Entities:FindByClassname( nil, "info_player_start_goodguys" )
+	local startEnt = newStartEntity or Entities:FindByClassname( nil, "info_player_start_goodguys" )
 	if startEnt == nil then
 		self:_Log( "info_player_start_goodguys is NOT FOUND" )
 		return
@@ -91,7 +91,7 @@ function GridNavMap:PreInitialize( kv )
 	-- Generate static maps
 	self.vBlocked				= self:_GenerateBlockedMap()
 	self.vCost, self.vPartition	= self:_GenerateCostAndPartitionMap( self.vBlocked, vTraversableIndexMap )
-	self.vPoolID				= self:_GeneratePoolIDMap( self.vCost, kv.NoLevelFlow )
+	self.vPoolID				= self:_GeneratePoolIDMap( self.vCost, kv.NoLevelFlow, kv.AutoSplitPoolBy )
 
 	--
 	-- Update graph
@@ -128,11 +128,11 @@ end
 --------------------------------------------------------------------------------
 -- Initialize
 --------------------------------------------------------------------------------
-function GridNavMap:Initialize( kv )
+function GridNavMap:Initialize( kv, newStartEntity )
 
-	if not self._isPreInited then
+	if not self._isPreInited or newStartEntity then
 		-- Do not init GridNavMap until the map has been completely loaded.
-		self:PreInitialize( kv )
+		self:PreInitialize( kv, newStartEntity )
 		self._isPreInited = true
 	end
 
@@ -414,6 +414,7 @@ function GridNavMap:_GenerateCostAndPartitionMap( vBlocked, vTraversableIndexMap
 
 		-- Update map distance
 		self.flMapDistance = math.max( self:CostToWorldUnit( costMax ), self.flMapDistance or 0 )
+		self.nMapDistanceInBlock = math.max( costMax, self.nMapDistanceInBlock or 0 )
 
 		currentPartitionID = currentPartitionID + 1
 
@@ -484,34 +485,50 @@ function GridNavMap:_GenerateCostAndPartitionMap( vBlocked, vTraversableIndexMap
 end
 
 --------------------------------------------------------------------------------
-function GridNavMap:_GeneratePoolIDMap( vCost, bNoLevelFlow )
+function GridNavMap:_GeneratePoolIDMap( vCost, bNoLevelFlow, nAutoSplitPoolBy )
 
 	self:_Log( "Generating pool map..." )
 
 	local poolIDMap = {}
 	local poolEntAry = {}
 
-	-- Collect pool entities in the map
-	for _,v in pairs(Entities:FindAllByClassname( "info_target" )) do
-		local entName = v:GetName()
-		if string.find( entName, "monster_pool_" ) == 1 then
-			local poolPos = v:GetAbsOrigin()
-			local gridIndex = self:WorldPosToIndex( poolPos )
+	if not nAutoSplitPoolBy then
+		-- Collect pool entities in the map
+		for _,v in pairs(Entities:FindAllByClassname( "info_target" )) do
+			local entName = v:GetName()
+			if string.find( entName, "monster_pool_" ) == 1 then
+				local poolPos = v:GetAbsOrigin()
+				local gridIndex = self:WorldPosToIndex( poolPos )
 
-			local gridPosX = GridNav:WorldToGridPosX( poolPos.x )
-			local gridPosY = GridNav:WorldToGridPosY( poolPos.y )
+				local gridPosX = GridNav:WorldToGridPosX( poolPos.x )
+				local gridPosY = GridNav:WorldToGridPosY( poolPos.y )
 
+				table.insert( poolEntAry, {
+					name = entName,
+					["x"] = GridNav:WorldToGridPosX( poolPos.x ),
+					["y"] = GridNav:WorldToGridPosY( poolPos.y ),
+					["index"] = gridIndex,
+					cost = vCost[gridIndex]
+				} )
+
+				self:_Log( "Added monster pool :" )
+				self:_Log( "  Name : " .. entName )
+				self:_Log( "  Cost : " .. vCost[gridIndex] )
+			end
+		end
+	else
+		if bNoLevelFlow then
+			self:_Log( "AutoSplitPool is disabled in NoLevelFlow map." )
+			return
+		end
+
+		-- Split the map
+		local segmentLength = self.nMapDistanceInBlock / nAutoSplitPoolBy
+		for i=1, nAutoSplitPoolBy do
 			table.insert( poolEntAry, {
-				name = entName,
-				["x"] = GridNav:WorldToGridPosX( poolPos.x ),
-				["y"] = GridNav:WorldToGridPosY( poolPos.y ),
-				["index"] = gridIndex,
-				cost = vCost[gridIndex]
+				name = "monster_pool_" .. i,
+				cost = segmentLength * ( i - 1 )
 			} )
-
-			self:_Log( "Added monster pool :" )
-			self:_Log( "  Name : " .. entName )
-			self:_Log( "  Cost : " .. vCost[gridIndex] )
 		end
 	end
 

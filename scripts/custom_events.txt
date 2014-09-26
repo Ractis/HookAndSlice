@@ -80,6 +80,14 @@
 	{
 		"wantRestart"	"bool"
 	}
+	
+	"dotahs_show_leveleditor"
+	{
+	}
+	
+	"dotahs_hide_leveleditor"
+	{
+	}
 
 	"dotahs_map_info"
 	{

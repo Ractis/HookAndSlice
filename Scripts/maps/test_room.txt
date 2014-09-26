@@ -1,0 +1,31 @@
+"test_room"
+{
+//	"OutputGridNavMapImage"		"1"		// For debugging the level
+
+	"CustomLevel"
+	{
+		"Areas"
+		{
+			"1"
+			{
+				"StartFrom"				"area_1_start"
+				"DesiredEnemyDensity"	"0.7"
+			}
+			"2"
+			{
+				"StartFrom"				"area_2_start"
+				"DesiredEnemyDensity"	"0.85"
+			}
+			"3"
+			{
+				"StartFrom"				"area_3_start"
+				"DesiredEnemyDensity"	"0.4"
+			}
+			"4"
+			{
+				"StartFrom"				"area_4_start"
+				"DesiredEnemyDensity"	"0.4"
+			}
+		}
+	}
+}

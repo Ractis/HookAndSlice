@@ -26,10 +26,12 @@
 	"RareMonsterChance"				"15"	// [%]
 	"MythicalMonsterChance"			"3"		// [%]
 	
-	"ExpMultiplier"					"2"
+	"ExpMultiplier"					"3"
 	
 	"EnemyHPMultiplierSolo"			"0.40"
 	"EnemyHPMultiplierGain"			"0.15"
+	"EnemyHPMultiplier"				"1.0"	// Map specific
 	"DesiredEnemiesSolo"			"110 120 130"
 	"DesiredEnemiesGain"			"40 45 50"
+	"DesiredEnemyDensity"			"1.0"	// Map specific
 }

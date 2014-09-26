@@ -86,7 +86,7 @@ function ItemManager:Initialize()
 	self._vItemMap = {}					-- ItemID : ItemEntity
 	self._vPlayerHSInventoryMap = {}	-- PlayerID : [ SlotName : ItemID ]
 	self._vPlayerDotaInventoryMap = {}	-- PlayerID : [ ItemID : CurrentCharges ]
-	self._vPlayersPoppedAllItems = {}	-- PlayerID : TRUE
+	self._vPlayerKilled = {}			-- PlayerID : TRUE
 
 	ItemProperties:Initialize()
 
@@ -506,18 +506,18 @@ end
 
 --------------------------------------------------------------------------------
 function ItemManager:CheckRestorePlayerItems()
-	if not self._vPlayersPoppedAllItems then
+	if not self._vPlayerKilled then
 		return
 	end
 	
-	for playerID, bPopped in pairs( self._vPlayersPoppedAllItems ) do
+	for playerID, bPopped in pairs( self._vPlayerKilled ) do
 		if bPopped then
 			local hero = PlayerResource:GetSelectedHeroEntity( playerID )
 			if hero then
 				if hero:IsAlive() then
 					-- Revived
-				--	ItemProperties:PushAllItemsTo( hero )
-					self._vPlayersPoppedAllItems[playerID] = nil
+					ItemProperties:RestorePlayerItems( hero )
+					self._vPlayerKilled[playerID] = nil
 				end
 			end
 		end
@@ -643,9 +643,7 @@ function ItemManager:OnEntityKilled( event )
 		return
 	end
 
-	-- Pop all items
---	ItemProperties:PopAllItemsFrom( killedUnit )
-	self._vPlayersPoppedAllItems[killedUnit:GetPlayerID()] = true
+	self._vPlayerKilled[killedUnit:GetPlayerID()] = true
 
 end
 
@@ -734,6 +732,18 @@ function ItemProperties:_DetachFrom_Impl( unit, properties )
 		local newValue = currentValue - v
 		self:_UpdateModifiers( unit, propertyKey, currentValue, newValue )
 		self:_SetPropertyValue( unit, propertyKey, newValue )
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Restore
+--------------------------------------------------------------------------------
+function ItemProperties:RestorePlayerItems( unit )
+	self:_Log( "Restoring modifiers for " .. unit:GetClassname() )
+
+	for k,v in pairs(self:_GetPropertyMap( unit )) do
+		self:_UpdateModifiers( unit, k, v, 0 )
+		self:_UpdateModifiers( unit, k, 0, v )
 	end
 end
 

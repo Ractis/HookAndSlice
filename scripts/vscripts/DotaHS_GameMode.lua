@@ -12,6 +12,8 @@ require( "DotaHS_MissionManager_RescueHostage" )
 require( "DotaHS_MissionManager_CustomLevel" )
 require( "DotaHS_Quest" )
 
+require( "DotaHS_AI_FollowerBotManager" )
+
 require( "Util_Serialize" )
 
 local DEBUG = false
@@ -108,6 +110,7 @@ function DotaHS:InitGameMode()
 --	GridNavMap:PreInitialize( self._vGameConfiguration )	-- Do not init GridNavMap until the map has been completely loaded.
 	SpawnManager:PreInitialize()
 	SpawnDirector:PreInitialize()
+	AI_FollowerBotManager:PreInitialize()
 
 	if type(self._vGameConfiguration.RescueHostage) == "table" then
 		self._bRescueHostage = true
@@ -168,7 +171,9 @@ function DotaHS:OnThink()
 	end
 
 	if self._nGameEndState == NOT_ENDED then
-		self:_CheckForDefeat()
+	--	if not DEBUG then
+			self:_CheckForDefeat()
+	--	end
 		self:_CheckForVictory()
 	end
 
@@ -426,8 +431,8 @@ end
 
 
 function DotaHS:_CheckRestartVotes()
-	if ( self._nRestartVoteYes + self._nRestartVoteNo ) == DotaHS_NumPlayers() then
-		if self._nRestartVoteYes == DotaHS_NumPlayers() then
+	if ( self._nRestartVoteYes + self._nRestartVoteNo ) == DotaHS_NumPlayers( true ) then
+		if self._nRestartVoteYes == DotaHS_NumPlayers( true ) then
 			self:_RestartGame()
 		else
 			-- Exit game
@@ -458,6 +463,7 @@ function DotaHS:_RestartGame()
 	end
 
 	-- Finalize modules
+	AI_FollowerBotManager:Finalize()
 	if type(self._vGameConfiguration.RescueHostage) == "table" then
 		MissionManager_RescueHostage:Finalize()
 	end
@@ -556,6 +562,7 @@ function DotaHS:OnEntityKilled( event )
 		local tombstone = SpawnEntityFromTableSynchronous( "dota_item_tombstone_drop", {} )
 		tombstone:SetContainedItem( newItem )
 		tombstone:SetAngles( 0, RandomFloat( 0, 360 ), 0 )
+		tombstone.DotaHS_PlayerID = DotaHS_HeroEntityToPlayerID( killedUnit )
 		FindClearSpaceForUnit( tombstone, killedUnit:GetAbsOrigin(), true )
 		return
 	end
@@ -582,42 +589,38 @@ end
 function DotaHS:OnNPCSpawn( event )
 	local unitSpawned = EntIndexToHScript( event.entindex )
 
-	if unitSpawned:IsRealHero() then
-		local playerID = unitSpawned:GetPlayerID()
+	if unitSpawned:GetTeamNumber() == DOTA_TEAM_GOODGUYS and unitSpawned:IsRealHero() then
 
-		if PlayerResource:IsValidPlayerID( playerID ) then
-
-			-- Starting level
-			for i=1, self._nStartingLevel-1 do
-				unitSpawned:HeroLevelUp( false )
-			end
-
-			-- Add DotaHS Item
-			if not unitSpawned:HasItemInInventory( "item_dotahs_inventory" ) then
-				-- Add special items
-				local itemInventory = CreateItem( "item_dotahs_inventory", nil, nil )
-				unitSpawned:AddItem( itemInventory )
-
-				print( "Added InventoryToggleItem to " .. unitSpawned:GetClassname() )
-
-				-- Modify base HP/Mana regen
-				local baseHPRegen = unitSpawned:GetHealthRegen()
-				local modifiedHPRegen = baseHPRegen + self._fDefaultAdditionalHPRegen
-				unitSpawned:SetBaseHealthRegen( modifiedHPRegen )
-				local baseManaRegen = unitSpawned:GetManaRegen()
-				local modifiedManaRegen = baseManaRegen + self._fDefaultAdditionalManaRegen
-				unitSpawned:SetBaseManaRegen( modifiedManaRegen )
-
-				print( "Changed Base HPRegen : " .. modifiedHPRegen .. " from " .. baseHPRegen )
-				print( "Changed Base ManaRegen : " .. modifiedManaRegen .. " from " .. baseManaRegen )
-
-				-- TEST
-				local item = CreateItem( "item_dotahs_modifiers_damage", nil, nil )
-			--	item:ApplyDataDrivenModifier( unitSpawned, unitSpawned, "dotahs_damage_32768", {} )
-				--unitSpawned:RemoveModifierByName( "dotahs_damage_8" )
-			end
-
+		-- Starting level
+		for i=unitSpawned:GetLevel(), self._nStartingLevel-1 do
+			unitSpawned:HeroLevelUp( false )
 		end
+
+		-- Add DotaHS Item
+		if not unitSpawned:HasItemInInventory( "item_dotahs_inventory" ) then
+			-- Add special items
+			local itemInventory = CreateItem( "item_dotahs_inventory", nil, nil )
+			unitSpawned:AddItem( itemInventory )
+
+			print( "Added InventoryToggleItem to " .. unitSpawned:GetClassname() )
+
+			-- Modify base HP/Mana regen
+			local baseHPRegen = unitSpawned:GetHealthRegen()
+			local modifiedHPRegen = baseHPRegen + self._fDefaultAdditionalHPRegen
+			unitSpawned:SetBaseHealthRegen( modifiedHPRegen )
+			local baseManaRegen = unitSpawned:GetManaRegen()
+			local modifiedManaRegen = baseManaRegen + self._fDefaultAdditionalManaRegen
+			unitSpawned:SetBaseManaRegen( modifiedManaRegen )
+
+			print( "Changed Base HPRegen : " .. modifiedHPRegen .. " from " .. baseHPRegen )
+			print( "Changed Base ManaRegen : " .. modifiedManaRegen .. " from " .. baseManaRegen )
+
+			-- TEST
+		--	local item = CreateItem( "item_dotahs_modifiers_damage", nil, nil )
+		--	item:ApplyDataDrivenModifier( unitSpawned, unitSpawned, "dotahs_damage_32768", {} )
+			--unitSpawned:RemoveModifierByName( "dotahs_damage_8" )
+		end
+		
 	end
 
 	if unitSpawned:GetTeamNumber() == DOTA_TEAM_BADGUYS and not unitSpawned:IsPhantom() then
@@ -641,7 +644,7 @@ function DotaHS:OnGameRulesStateChange()
 	}
 
 	local nNewState = GameRules:State_Get()
-	print( "Entering Game State to [" .. nNewState .. "] " .. statesMap[nNewState] )
+	self:_Log( "Entering Game State to [" .. nNewState .. "] " .. statesMap[nNewState] )
 
 	--------------------------------------------------------------------------------
 	-- STRATEGY TIME
@@ -664,14 +667,33 @@ function DotaHS:OnGameRulesStateChange()
 			DotaHS_GlobalVars.bGameInProgress = true
 		else
 			-- CustomLevel gamemode
+			GridNavMap:PreInitialize( self._vGameConfiguration )
 			MissionManager_CustomLevel:Initialize( self._vGameConfiguration )
 		end
 
-	--	if DEBUG then
-	--		for i=1, 25 do
-	--			ItemManager:CreateLoot( Vector(109, 157, 256+1) )
-	--		end
-	--	end
+		AI_FollowerBotManager:Initialize()
+
+		if DEBUG then
+			local startEnt = Entities:FindByClassname( nil, "info_player_start_goodguys" )
+			local spawnPos = startEnt:GetAbsOrigin()
+			for i=1, 25 do
+				ItemManager:CreateLoot( spawnPos )--Vector(109, 157, 256+1) )
+			end
+		--	AI_FollowerBotManager:CreateFollower( "naga_siren" )
+		--	AI_FollowerBotManager:CreateFollower( "abaddon" )
+		--	AI_FollowerBotManager:CreateFollower( "omniknight" )
+		--	AI_FollowerBotManager:CreateFollower( "sven" )
+		--	AI_FollowerBotManager:CreateFollower( "luna" )
+		--	AI_FollowerBotManager:CreateFollower( "templar_assassin" )
+		--	AI_FollowerBotManager:CreateFollower( "enchantress" )
+		--	AI_FollowerBotManager:CreateFollower( "keeper_of_the_light" )
+		--	AI_FollowerBotManager:CreateFollower( "lina" )
+
+		--	-- Tombstone test
+		--	for i=1, 3 do
+		--		AI_FollowerBotManager:CreateFollower( "wisp" )
+		--	end
+		end
 	end
 end
 

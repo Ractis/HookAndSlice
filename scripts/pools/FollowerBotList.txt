@@ -1,0 +1,56 @@
+"FollowerBotList"
+{
+	"naga_siren"
+	{
+		"attribute"	"agi"
+		"label"		"Naga Siren"
+	}
+
+	"abaddon"
+	{
+		"attribute"	"str"
+		"label"		"Abaddon"
+	}
+
+	"omniknight"
+	{
+		"attribute"	"str"
+		"label"		"Omniknight"
+	}
+
+	"sven"
+	{
+		"attribute"	"str"
+		"label"		"Sven"
+	}
+
+	"luna"
+	{
+		"attribute"	"agi"
+		"label"		"Luna"
+	}
+
+	"templar_assassin"
+	{
+		"attribute"	"agi"
+		"label"		"Templar Assassin"
+	}
+
+	"enchantress"
+	{
+		"attribute"	"int"
+		"label"		"Enchantress"
+	}
+
+	"keeper_of_the_light"
+	{
+		"attribute"	"int"
+		"label"		"Keeper of the Light"
+	}
+
+	"lina"
+	{
+		"attribute"	"int"
+		"label"		"Lina"
+	}
+}

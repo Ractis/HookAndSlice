@@ -20,7 +20,7 @@ local GridNavCluster		= {}	-- Class
 local ClusterRegion			= {}	-- Class
 local ClusterRegionLabel	= {}	-- Class
 
-local PriorityQueue			= {}	-- Class
+local SimpleQueue			= {}	-- Class
 
 
 
@@ -122,6 +122,8 @@ function GridNavMap:PreInitialize( kv, newStartEntity )
 	end, "Save PoolID Map", FCVAR_CHEAT )
 
 	profile_end()
+
+	self._isPreInited = true
 	
 end
 
@@ -133,7 +135,6 @@ function GridNavMap:Initialize( kv, newStartEntity )
 	if not self._isPreInited or newStartEntity then
 		-- Do not init GridNavMap until the map has been completely loaded.
 		self:PreInitialize( kv, newStartEntity )
-		self._isPreInited = true
 	end
 
 	profile_begin( "GridNavMap:Initialize" )
@@ -372,9 +373,7 @@ function GridNavMap:_GenerateCostAndPartitionMap( vBlocked, vTraversableIndexMap
 		
 		self:_Log( "FloodFill from ( " .. startX .. ", " .. startY .. " ) : cost = " .. startCost )
 
-		local openQueue = PriorityQueue.new( function ( a, b )
-			return a.cost < b.cost
-		end )
+		local openQueue = SimpleQueue()
 		local openSet = {}
 		local closed = costMap	-- key: gridIndex, value: cost
 
@@ -567,9 +566,7 @@ function GridNavMap:_GeneratePoolIDMap( vCost, bNoLevelFlow, nAutoSplitPoolBy )
 		-- Level has no flow
 
 		-- Flood fill from all seeds
-		local openQueue = PriorityQueue.new( function ( a, b )
-			return a.cost < b.cost
-		end )
+		local openQueue = SimpleQueue()
 		local openSet = {}
 		local closed = {}	-- GridIndex : PoolID
 
@@ -1081,9 +1078,7 @@ function GridNavClusterMap:FindCandidateRegions( vAllPlayersPos, distance )
 --		self:_Log( "Couldn't find candidate regions : No players available" )
 --	end
 
-	local openQueue = PriorityQueue.new( function ( a, b )
-		return a.cost < b.cost
-	end )
+	local openQueue = SimpleQueue()
 	local openSet = {}
 	local closed = {}
 	local candidateRegions = {}
@@ -1479,37 +1474,23 @@ end
 
 --------------------------------------------------------------------------------
 --
--- PriorityQueue
---
--- This class is just QUEUE. It work for this gamemode.
+-- SimpleQueue
 --
 --------------------------------------------------------------------------------
+SimpleQueue = class({})
 
-function PriorityQueue.new( cmp )
-	local o = {}
-	setmetatable( o, { __index = PriorityQueue } )
-	o:__init( cmp )
-	return o
+function SimpleQueue:constructor()
+	self.queue = {}
 end
 
-function PriorityQueue:__init( cmp )
-	self._cmp	= cmp or function( a, b ) return a < b end
-	self._queue = {}
+function SimpleQueue:push( v )
+	table.insert( self.queue, v )
 end
 
-function PriorityQueue:push( v )
-	table.insert( self._queue, v )
---	table.sort( self._queue, self._cmp )	-- CAREFUL!!!
+function SimpleQueue:pop()
+	return table.remove( self.queue, 1 )
 end
 
-function PriorityQueue:pop()
-	return table.remove( self._queue, 1 )
-end
-
-function PriorityQueue:peek()
-	return self._queue[1]
-end
-
-function PriorityQueue:empty()
-	return #self._queue == 0
+function SimpleQueue:empty()
+	return #self.queue == 0
 end

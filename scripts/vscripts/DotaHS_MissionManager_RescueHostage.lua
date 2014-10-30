@@ -126,7 +126,7 @@ function MissionManager_RescueHostage:OnUpdate()
 
 		for playerID, playerPos in pairs( self.vPlayerPosition ) do
 
-			local playerHero = PlayerResource:GetSelectedHeroEntity( playerID )
+			local playerHero = DotaHS_PlayerIDToHeroEntity( playerID )
 			local dist = ( hostagePos - playerPos ):Length2D()
 
 			if dist < 300 and playerHero:IsAlive() then
@@ -193,7 +193,7 @@ function MissionManager_RescueHostage:OnUpdate()
 			local order = {
 				OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
 				UnitIndex = hostagesFollowPlayer[1]:entindex(),
-				TargetIndex = PlayerResource:GetSelectedHeroEntity( playerID ):entindex(),
+				TargetIndex = DotaHS_PlayerIDToHeroEntity( playerID ):entindex(),
 			}
 			ExecuteOrderFromTable( order )
 
@@ -258,7 +258,7 @@ function MissionManager_RescueHostage:OnEntityKilled( event )
 	end
 
 	if killedUnit:IsRealHero() then
-		local playerID = killedUnit:GetPlayerID()
+		local playerID = DotaHS_HeroEntityToPlayerID( killedUnit )
 
 		-- Check following hostages
 		local hostagesFollowPlayer = self.vPlayerHostages[playerID]

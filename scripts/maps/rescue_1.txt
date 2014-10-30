@@ -413,7 +413,7 @@
 			"npc_dotahs_rattletrap"
 			{
 				"Weight"		"125 155 185"
-			//	"WeightHorde"	"30 65 100"
+				"WeightHorde"	"30 65 100"
 				"Level"			"3"
 				"Intensity"		"1"
 			}

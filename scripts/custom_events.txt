@@ -88,6 +88,36 @@
 	"dotahs_hide_leveleditor"
 	{
 	}
+	
+	"dotahs_follower_info_begin"
+	{
+		"numStr"	"short"
+		"numAgi"	"short"
+		"numInt"	"short"
+	}
+	
+	"dotahs_follower_info"
+	{
+		"heroName"	"string"
+		"attribute"	"string"
+	}
+	
+	"dotahs_follower_info_end"
+	{
+		"numPlayers"	"short"
+		"numMaxPlayers"	"short"
+		"followerSelectionTime"	"short"
+	}
+
+	"dotahs_follower_approved"
+	{
+		"heroName"	"string"
+		"approved"	"bool"
+	}
+
+	"dotahs_follower_vote_end"
+	{
+	}
 
 	"dotahs_map_info"
 	{

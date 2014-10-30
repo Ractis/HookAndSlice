@@ -1,5 +1,7 @@
 package 
 {
+	import com.greensock.plugins.AutoAlphaPlugin;
+	import com.greensock.plugins.TweenPlugin;
 	import customLevelEditor.CustomLevelEditor;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -15,6 +17,7 @@ package
 	import inventory.InventoryManager;
 	import inventory.Item;
 	import inventory.ItemDetailPanel;
+	import voteFollower.VoteFollowerPanel;
 	import voting.VotingPanel;
 	
 	public class Main extends MovieClip implements IDotaAPI
@@ -31,6 +34,7 @@ package
 		// Modules
 		private var _inventoryManager:InventoryManager;
 		private var _customLevelEditor:CustomLevelEditor;
+		private var _voteFollowerPanel:VoteFollowerPanel;
 		
 		public function Main():void
 		{
@@ -44,9 +48,15 @@ package
 			{
 				trace( "DotaHS GUI Initializing." );
 				
+				// TweenLite
+				TweenPlugin.activate([AutoAlphaPlugin]);
+				
 				// Create modules
 				addChild( _inventoryManager = new InventoryManager() );
 				addChild( _customLevelEditor = new CustomLevelEditor() );
+				addChild( _voteFollowerPanel = new VoteFollowerPanel() );
+				
+				// Test modules here!
 			}
 			catch ( e:Error )
 			{
@@ -68,6 +78,7 @@ package
 				// Initialize modules
 				_inventoryManager.onLoaded( this );
 				_customLevelEditor.onLoaded( this );
+				_voteFollowerPanel.onLoaded( this );
 				
 				var votingPanel:VotingPanel = new VotingPanel( gameAPI );
 				addChild( votingPanel );
@@ -150,9 +161,21 @@ package
 			gameAPI.SendServerCommand( command );
 		}
 		
+		public function get gameTime():Number
+		{
+		//	return globals.Game.GetGameTime();	// <= Will cause HANG! DO NOT USE IT.
+			return globals.Game.Time();
+		}
+		
 		public function get localPlayerID():int
 		{
 			return globals.Players.GetLocalPlayer();
+		}
+		
+		public function get isLobbyLeader():Boolean
+		{
+		//	return false;
+			return localPlayerID == 0;
 		}
 		
 	}

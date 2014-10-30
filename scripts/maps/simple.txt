@@ -1,0 +1,35 @@
+"simple"
+{
+	"StartingLevel"					"25"
+	"StartSafeZoneDistance"			"0"	// [units]
+//	"ExpMultiplier"					"30"
+	"EnemyHPMultiplier"				"3.0"
+//	"DesiredEnemyDensity"			"0"		// no enemies
+//	"DesiredEnemyDensity"			"0.008"	// 1 enemy
+	"DesiredEnemyDensity"			"0.025"	// 3 enemies
+	
+	"AutoSplitPoolBy"				"1"
+	
+	"MonsterPools"
+	{
+		"monster_pool_1"
+		{
+			"npc_dota_neutral_kobold"	"100"
+		//	"npc_dotahs_magnus"			"50"
+		//	"npc_dotahs_jakiro"			"50"
+		//	"npc_dotahs_nevermore"		"50"
+		//	"npc_dotahs_phoenix"		"50"
+		//	"npc_dotahs_nyxnyxnyx"		"50"
+		//	"npc_dotahs_pudge"			"50"
+		//	"npc_dotahs_tusk"			"50"
+		//	"npc_dota_creature_minor_lich"	"50"
+		//	"npc_dota_creature_basic_zombie_exploding"	"50"
+		//	"npc_dota_creature_slithereen"	"50"
+		//	"npc_dota_creature_tormented_soul"	"50"
+		//	"npc_dota_creature_mini_roshan"	"50"
+		//	"npc_dotahs_rattletrap"		"50"
+		//	"npc_dotahs_faerie_dragon"	"50"
+		//	"npc_dota_neutral_mud_golem"	"100"
+		}
+	}
+}

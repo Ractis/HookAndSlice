@@ -307,18 +307,43 @@
 		"BaseClass"			"ability_datadriven"
 		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
+		"OnCreated"
+		{
+			"AddModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_phased"
+			}
+		}
+		
 		// Data-Driven
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
 		{
 			"default"
 			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_PERMANENT"
 				"Passive"		"1"
 				"IsPurgable"	"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"	"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"	"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"		"1"
+				//	"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS"			"591"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"100"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"0"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"100"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"100"
+				}
 				"States"
 				{
-					"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+				//	"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ATTACK_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				//	"MODIFIER_STATE_BLOCK_DISABLED"			"MODIFIER_STATE_VALUE_ENABLED"	// Stout shield?
 				//	"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
@@ -359,14 +384,14 @@
 		{
 			"arrested"
 			{
-				"IsPurgable"	"0"
+				"Attributes"		"MODIFIER_ATTRIBUTE_NONE"
+				"IsPurgable"		"0"
 				"EffectName" 		"particles/generic_gameplay/generic_silence.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"OverrideAnimation"	"ACT_DOTA_DISABLED"
+				
 				"States"
 				{
-				//	"MODIFIER_STATE_INVULNERABLE"			"MODIFIER_STATE_VALUE_ENABLED"
-				//	"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FROZEN"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"					"MODIFIER_STATE_VALUE_ENABLED"

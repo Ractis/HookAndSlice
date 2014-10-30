@@ -136,7 +136,8 @@ function MissionManager_CustomLevel:_PlayLevel( playerID, areaID, difficulty )
 		for i=hero:GetLevel(), config.StartingLevel-1 do
 			hero:HeroLevelUp( false )
 		end
-	end)
+	end )
+	SendToConsole( "dota_camera_center" )
 
 end
 

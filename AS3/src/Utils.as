@@ -52,7 +52,7 @@ package
 			return newObject;
 		}
 		
-		public static function CreateLabel( text:String, fontType:String ):TextField
+		public static function CreateLabel( text:String, fontType:String, funcDefaultTextFormat:Function = null ):TextField
 		{
 			var tf:TextField = new TextField();
 			tf.selectable = false;
@@ -60,6 +60,10 @@ package
 			var format:TextFormat = new TextFormat();
 			format.font = fontType;
 			format.color = 0xDDDDDD;
+			if ( funcDefaultTextFormat != null )
+			{
+				funcDefaultTextFormat( format );
+			}
 			tf.defaultTextFormat = format;
 			
 			tf.text = text;

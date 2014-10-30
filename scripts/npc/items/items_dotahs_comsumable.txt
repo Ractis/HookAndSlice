@@ -30,7 +30,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"	"haste"
+				"ModifierName"	"modifier_smoke_of_haste"
 				"Target"
 				{
 					"Center"	"CASTER"
@@ -54,7 +54,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
 		{
-			"haste"
+			"modifier_smoke_of_haste"
 			{
 				"Duration"			"%duration"
 				"EffectName" 		"particles/generic_gameplay/rune_haste_owner.vpcf"
@@ -120,7 +120,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"	"avatar"
+				"ModifierName"	"modifier_smoke_of_bkb"
 				"Target"
 				{
 					"Center"	"CASTER"
@@ -144,7 +144,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
 		{
-			"avatar"
+			"modifier_smoke_of_bkb"
 			{
 				"Duration"			"%duration"
 				"EffectName" 		"particles/items_fx/black_king_bar_avatar.vpcf"
@@ -205,7 +205,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"	"silence"
+				"ModifierName"	"modifier_dust_of_silence"
 				"Target"
 				{
 					"Center"	"CASTER"
@@ -229,7 +229,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
 		{
-			"silence"
+			"modifier_dust_of_silence"
 			{
 				"Duration"			"%duration"
 				"EffectName" 		"particles/generic_gameplay/generic_silence.vpcf"

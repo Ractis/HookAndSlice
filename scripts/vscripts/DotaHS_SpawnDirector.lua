@@ -111,17 +111,7 @@ end
 
 --------------------------------------------------------------------------------
 function SpawnDirector:_UpdatePlayerStats()
-	local nPlayersTotal = 0
-	local nPlayersAlive = 0
-
-	self:_ForEachPlayer( function ( playerID, hero )
-		if not hero then return end
-
-		nPlayersTotal = nPlayersTotal + 1
-		if hero:IsAlive() then
-			nPlayersAlive = nPlayersAlive + 1
-		end
-	end )
+	local nPlayersAlive, nPlayersTotal = DotaHS_NumPlayersAlive()
 
 	self._nPlayersAlive = nPlayersAlive
 
@@ -146,7 +136,7 @@ function SpawnDirector:_UpdateIntensity()
 	local maxIntensityPlayerName
 	local minIntensityPlayerName
 
-	self:_ForEachPlayer( function ( playerID, hero )
+	DotaHS_ForEachPlayer( function ( playerID, hero )
 		if not hero then return end
 
 		local intensity = self:_GetIntensityOf( playerID )
@@ -350,7 +340,7 @@ function SpawnDirector:OnEntityKilled( event )
 		-- That was dangerous threat?
 		local intensity = killedUnit.DotaHS_Intensity or 0
 
-		self:_ForEachPlayer( function ( playerID, hero )
+		DotaHS_ForEachPlayer( function ( playerID, hero )
 			if not hero then return end
 
 			local stress = INTENSITY_MILD
@@ -386,17 +376,6 @@ end
 --------------------------------------------------------------------------------
 function SpawnDirector:_Log( text )
 	print( "[SpawnDirector] " .. text )
-end
-
-function SpawnDirector:_ForEachPlayer( func --[[ playerID, hero ]] )
-	for playerID = 0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if PlayerResource:GetTeam( playerID ) == DOTA_TEAM_GOODGUYS then
-			if PlayerResource:HasSelectedHero( playerID ) then
-				local hero = PlayerResource:GetSelectedHeroEntity( playerID )
-				func( playerID, hero )
-			end
-		end
-	end
 end
 
 function SpawnDirector:_Distance( unitA, unitB )

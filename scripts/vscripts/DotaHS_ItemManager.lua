@@ -17,6 +17,12 @@ end
 local DynamicWeightPool	= {}	-- Class
 local DropOddsPool		= {}	-- Class
 
+local INVENTORY_NUM_EQUIPMENT_SLOTS		= 7
+local INVENTORY_NUM_CONSUMABLE_SLOTS	= 4
+local INVENTORY_NUM_BACKPACK_SLOTS		= 15
+
+local vConsumableSet = {}	-- name : true
+
 
 
 --------------------------------------------------------------------------------
@@ -44,20 +50,21 @@ function ItemManager:PreInitialize()
 
 
 	-- Register game events
-	self:_AddEventListener( "dota_item_picked_up",	"OnItemPickedUp" )
---	self:_AddEventListener( "dota_item_used",		"OnItemUsed" )	-- BROKEN
-	self:_AddEventListener( "entity_killed",		"OnEntityKilled" )
+	self:_AddEventListener( "dota_item_picked_up",		"OnItemPickedUp" )
+--	self:_AddEventListener( "dota_item_used",			"OnItemUsed" )	-- BROKEN
+	self:_AddEventListener( "dota_player_used_ability",	"OnUsedAbility" )
+	self:_AddEventListener( "entity_killed",			"OnEntityKilled" )
 
 	-- Register Commands
 	Convars:RegisterCommand( "dotahs_inventory_swap",
 	function ( _, slotname1, slotname2 )
-		self:InventorySwap( Convars:GetCommandClient(), slotname1, slotname2 )
+		self:InventorySwap( Convars:GetCommandClient():GetPlayerID(), slotname1, slotname2 )
 	end,
 	"Swap inventory items", 0 )
 
 	Convars:RegisterCommand( "dotahs_inventory_drop",
 	function ( _, slotname )
-		ItemManager:InventoryDrop( Convars:GetCommandClient(), slotname )
+		self:InventoryDrop( Convars:GetCommandClient():GetPlayerID(), slotname )
 	end,
 	"Drop inventory item", 0 )
 
@@ -87,6 +94,11 @@ function ItemManager:Initialize()
 	self._vPlayerHSInventoryMap = {}	-- PlayerID : [ SlotName : ItemID ]
 	self._vPlayerDotaInventoryMap = {}	-- PlayerID : [ ItemID : CurrentCharges ]
 	self._vPlayerKilled = {}			-- PlayerID : TRUE
+
+	-- Updated in ItemManager:_UpdateNetworth()
+	self._vPlayerEquipmentCostMap = {}	-- PlayerID : Total Cost of Equipments
+	self._vPlayerEquipmentLowestMap = {}
+	self._vPlayerNumConsumables = {}	-- PlayerID : Num Consumables
 
 	ItemProperties:Initialize()
 
@@ -136,6 +148,8 @@ end
 function ItemManager:CreateInventory( playerID )
 	self._vPlayerHSInventoryMap[playerID] = {}
 	self._vPlayerDotaInventoryMap[playerID] = {}
+	self._vPlayerEquipmentCostMap[playerID] = 0
+	self._vPlayerNumConsumables[playerID] = 0
 
 	self:_Log( "Created inventory for PlayerID:" .. playerID )
 end
@@ -143,8 +157,7 @@ end
 --------------------------------------------------------------------------------
 -- Swap in the Inventory
 --------------------------------------------------------------------------------
-function ItemManager:InventorySwap( player, slotName1, slotName2 )
-	local playerID = player:GetPlayerID()
+function ItemManager:InventorySwap( playerID, slotName1, slotName2 )
 	local isEquipment1 = self:_isEquipmentSlot( slotName1 )
 	local isEquipment2 = self:_isEquipmentSlot( slotName2 )
 	local isConsumable1 = self:_isConsumableSlot( slotName1 )
@@ -162,11 +175,15 @@ function ItemManager:InventorySwap( player, slotName1, slotName2 )
 		slot2ItemOld = self._vItemMap[ inventory[slotName2] ]
 	end
 
+	self:_Log( "  Item 1 : " .. slot1ItemOld:GetAbilityName() )
+	self:_Log( "  Item 2 : " .. ( slot2ItemOld and slot2ItemOld:GetAbilityName() or "[EMPTY]" ) )
+
+
 	-- Swap
 	inventory[slotName1], inventory[slotName2] = inventory[slotName2], inventory[slotName1]
 
 	-- Update item modifiers
-	local heroUnit = PlayerResource:GetSelectedHeroEntity( playerID )
+	local heroUnit = DotaHS_PlayerIDToHeroEntity( playerID )
 
 	if isEquipment1 ~= isEquipment2 then
 		local slotItemOldE
@@ -213,6 +230,7 @@ function ItemManager:InventorySwap( player, slotName1, slotName2 )
 		-- Add item to dota2 inventory
 		if slotItemOldNotC ~= nil then
 			heroUnit:AddItem( slotItemOldNotC )
+			vConsumableSet[slotItemOldNotC:GetAbilityName()] = true
 			dotaInventory[slotItemOldNotC:entindex()] = slotItemOldNotC:GetCurrentCharges()
 		end
 	end
@@ -239,8 +257,7 @@ end
 --------------------------------------------------------------------------------
 -- Drop a item from the Inventory
 --------------------------------------------------------------------------------
-function ItemManager:InventoryDrop( player, slotName )
-	local playerID = player:GetPlayerID()
+function ItemManager:InventoryDrop( playerID, slotName )
 	local isEquipment = self:_isEquipmentSlot( slotName )
 	local isConsumable = self:_isConsumableSlot( slotName )
 
@@ -249,11 +266,13 @@ function ItemManager:InventoryDrop( player, slotName )
 	self:_Log( "  Slot Name : " .. slotName )
 
 	local inventory = self._vPlayerHSInventoryMap[playerID]
-	local heroUnit = PlayerResource:GetSelectedHeroEntity( playerID )
+	local heroUnit = DotaHS_PlayerIDToHeroEntity( playerID )
 
 	-- Remove from the inventory
 	local dropItem = self._vItemMap[ inventory[slotName] ]
 	inventory[slotName] = nil
+
+	self:_Log( "  Item Name : " .. dropItem:GetAbilityName() )
 
 	-- Update item modifiers
 	if isEquipment then
@@ -274,6 +293,9 @@ function ItemManager:InventoryDrop( player, slotName )
 
 	self:_Log( string.format( "Dropped %q at ", dropItem:GetAbilityName() ) .. tostring(dropLocation) )
 
+	-- Update NETWORTH
+	self:_UpdateNetworth( playerID )
+
 	-- Fire event to client
 	local eventData = {
 		["playerID"] = playerID,
@@ -284,6 +306,198 @@ function ItemManager:InventoryDrop( player, slotName )
 	FireGameEvent( "dotahs_remove_item_from_slot", eventData )
 	FireGameEvent( "dotahs_dropped_item", eventData )
 
+end
+
+--------------------------------------------------------------------------------
+-- Update NETWORTH
+--------------------------------------------------------------------------------
+function ItemManager:_UpdateNetworth( playerID )
+
+	self:_Log( ("Player[%d] : Updating NETWORTH..."):format( playerID ) )
+
+	--------------------------------------------------------------------------------
+	-- Equipment Cost
+	--
+	local lastTotalCost = self._vPlayerEquipmentCostMap[playerID]
+
+	local costArray = {}
+	local inventory = self._vPlayerHSInventoryMap[playerID]
+	for slotName,itemID in pairs(inventory) do
+		local item = self._vItemMap[itemID]
+		table.insert( costArray, item.DotaHS_GoldEfficiency )
+	end
+
+	local NUM_EQUIPMENT_SLOT = 7
+	if #costArray > NUM_EQUIPMENT_SLOT then
+		table.sort( costArray, function ( a, b ) return a > b end )
+	end
+
+	local totalCost = 0
+	for i=1, NUM_EQUIPMENT_SLOT do
+		if i > #costArray then break end
+		totalCost = totalCost + costArray[i]
+	end
+
+	self._vPlayerEquipmentCostMap[playerID] = totalCost
+
+	if #costArray >= NUM_EQUIPMENT_SLOT then
+		self._vPlayerEquipmentLowestMap[playerID] = costArray[NUM_EQUIPMENT_SLOT]
+	else
+		self._vPlayerEquipmentLowestMap[playerID] = 0
+	end
+
+	local EPSILON = 1e-5
+	if math.abs( totalCost - lastTotalCost ) > EPSILON then
+		self:_Log( ("Player[%d] : Total Equipment Cost to %.1f from %.1f"):format( playerID, totalCost, lastTotalCost ) )
+	end
+
+	--------------------------------------------------------------------------------
+	-- Num of Consumables
+	--
+	local totalCharges = 0
+	for slotName,itemID in pairs(inventory) do
+		local item = self._vItemMap[itemID]
+		-- Make sure the item is VALID !!
+		if IsValidEntity( item ) then
+			local numCharges = item:GetCurrentCharges()
+			if numCharges > 0 then
+				totalCharges = totalCharges + numCharges
+			end
+		end
+	end
+	if totalCharges ~= self._vPlayerNumConsumables[playerID] then
+		self._vPlayerNumConsumables[playerID] = totalCharges
+		self:_Log( ("Player[%d] : Num Consumables = %d"):format( playerID, totalCharges ) )
+	end
+
+end
+
+--------------------------------------------------------------------------------
+-- NETWORTH
+--------------------------------------------------------------------------------
+function ItemManager:GetEquipmentCost( playerID )
+	return self._vPlayerEquipmentCostMap[playerID]
+end
+
+--------------------------------------------------------------------------------
+-- Highest NETWORTH
+--------------------------------------------------------------------------------
+function ItemManager:GetHighestEquipmentCost()
+	local highestCost = 0
+	for k,v in pairs(self._vPlayerEquipmentCostMap) do
+		highestCost = math.max( highestCost, v )
+	end
+	return highestCost
+end
+
+--------------------------------------------------------------------------------
+-- Estimate Cost Growth
+--------------------------------------------------------------------------------
+function ItemManager:EstimateEquipmentCostGrowth( playerID, item )
+	local lowestCost = self._vPlayerEquipmentLowestMap[playerID]
+	if lowestCost == nil then
+		return item.DotaHS_GoldEfficiency
+	else
+		return math.max( item.DotaHS_GoldEfficiency - lowestCost, 0 )
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Num Consumables
+--------------------------------------------------------------------------------
+function ItemManager:GetNumConsumables( playerID )
+	return self._vPlayerNumConsumables[playerID]
+end
+
+--------------------------------------------------------------------------------
+-- Largest Num Consumables
+--------------------------------------------------------------------------------
+function ItemManager:GetLargestNumConsumables()
+	local largestConsumables = 0
+	for k,v in pairs(self._vPlayerNumConsumables) do
+		largestConsumables = math.max( largestConsumables, v )
+	end
+	return largestConsumables
+end
+
+--------------------------------------------------------------------------------
+-- Get Item In DotaInventory
+--------------------------------------------------------------------------------
+function ItemManager:GetItemInDotaInventory( playerID, itemName )
+	local itemFound
+	self:_ForEachConsumableSlot( playerID, function ( slotName, item )
+		if not item then return end
+		if not IsValidEntity(item) then return end
+		if item:GetAbilityName() ~= itemName then return end
+
+		-- The item found
+		itemFound = item
+	end )
+	return itemFound
+end
+
+--------------------------------------------------------------------------------
+-- AI / ItemSlotPairNeedToOrganize
+--------------------------------------------------------------------------------
+function ItemManager:AI_GetItemSlotPairNeedToOrganize( playerID )
+
+	for slotName, itemID in pairs(self._vPlayerHSInventoryMap[playerID]) do
+		if self:_isBackpackSlot( slotName ) then
+			-- Try to find desired slot for this item
+			local item = self._vItemMap[itemID]
+
+			if item.IsDotaHSConsumable then
+				-- Consumable
+				local emptySlotName = self:_FindEmptyConsumableSlot( playerID )
+				if emptySlotName then
+					return { slotName, emptySlotName }
+				end
+
+			else
+				-- Equipment
+				local emptySlotName = self:_FindEmptyEquipmentSlot( playerID )
+				if emptySlotName then
+					return { slotName, emptySlotName }
+				end
+
+				-- Swap?
+				local EPSILON = 1e-3
+				if self:EstimateEquipmentCostGrowth( playerID, item ) > EPSILON then
+					-- Find lowest slot
+					local lowest = 999999
+					local lowestSlotName = nil
+					self:_ForEachEquipmentSlot( playerID, function ( slotNameX, itemX )
+						if itemX and itemX.DotaHS_GoldEfficiency < lowest then
+							lowest = itemX.DotaHS_GoldEfficiency
+							lowestSlotName = slotNameX
+						end
+					end )
+
+					return { slotName, lowestSlotName }
+
+				else
+					-- Drop this
+					return { slotName, "DROP" }
+				end
+			end
+		end
+	end
+
+	return nil
+
+end
+
+--------------------------------------------------------------------------------
+-- AI / OrganizeInventory
+--------------------------------------------------------------------------------
+function ItemManager:AI_OrganizeInventory( playerID, itemSlotPairToSwap )
+	if itemSlotPairToSwap[2] == "DROP" then
+		-- Drop to ground
+		self:InventoryDrop( playerID, itemSlotPairToSwap[1] )
+	else
+		-- Swap
+		self:InventorySwap( playerID, itemSlotPairToSwap[1], itemSlotPairToSwap[2] )
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -323,10 +537,13 @@ function ItemManager:_CreateLootFromPool( spawnPoint, currentLevel, itemPoolName
 	-- Spawn
 	local item = self:CreateItem( name, spawnPoint, isEnableAutoPickup )
 
-	item.IsDotaHSItem = true
+	item.IsDotaHSItem		= true
+	item.IsDotaHSCurrency	= isEnableAutoPickup
+	item.IsDotaHSConsumable	= (not isEnableAutoPickup) and (item:GetCurrentCharges() > 0)
 	item.DotaHS_Category				= data.Type
 	item.DotaHS_BaseProperties			= newItemProperties
 	item.DotaHS_AdditionalProperties	= {}
+	item.DotaHS_GoldEfficiency			= self:_EsitimateGoldEfficiency( item )
 
 	if data.Charges then
 		item:SetCurrentCharges( self:_GenerateRNG( data.Charges ) )
@@ -401,6 +618,10 @@ end
 --------------------------------------------------------------------------------
 function ItemManager:ObserveDotaInventory()
 
+	if not DotaHS_GlobalVars.bGameInProgress then
+		return
+	end
+
 	if not self._vPlayerDotaInventoryMap then
 		return
 	end
@@ -409,9 +630,7 @@ function ItemManager:ObserveDotaInventory()
 
 	for playerID, dotaInventory in pairs(self._vPlayerDotaInventoryMap) do
 
-		local player = PlayerResource:GetPlayer( playerID )
-		local heroUnit = player:GetAssignedHero()
-
+		local heroUnit = DotaHS_PlayerIDToHeroEntity( playerID )
 		if heroUnit then
 
 			local itemsForCheck = {}	-- itemID : Charges
@@ -468,6 +687,8 @@ function ItemManager:ObserveDotaInventory()
 							self:_Log( string.format( "Removed item (ID=%d) from DOTA inventory", itemID ) )
 						end
 
+						self:_UpdateNetworth( playerID )
+
 						-- Fire event to client
 						local eventData = {
 							["playerID"] = playerID,
@@ -489,6 +710,8 @@ function ItemManager:ObserveDotaInventory()
 
 					dotaInventory[itemID] = charges
 
+					self:_UpdateNetworth( playerID )
+
 					-- Fire event to client
 					local eventData = {
 						["itemID"]	 	= itemID,
@@ -506,18 +729,23 @@ end
 
 --------------------------------------------------------------------------------
 function ItemManager:CheckRestorePlayerItems()
+	if not DotaHS_GlobalVars.bGameInProgress then
+		return
+	end
+	
 	if not self._vPlayerKilled then
 		return
 	end
 	
 	for playerID, bPopped in pairs( self._vPlayerKilled ) do
 		if bPopped then
-			local hero = PlayerResource:GetSelectedHeroEntity( playerID )
+			local hero = DotaHS_PlayerIDToHeroEntity( playerID )
 			if hero then
 				if hero:IsAlive() then
 					-- Revived
 					ItemProperties:RestorePlayerItems( hero )
 					self._vPlayerKilled[playerID] = nil
+					self:_Log( "Player[" .. playerID .. "] has been removed from vPlayerKilled" )
 				end
 			end
 		end
@@ -527,10 +755,11 @@ end
 --------------------------------------------------------------------------------
 function ItemManager:OnItemPickedUp( event )
 	local itemName	= event.itemname
-	local playerID	= event.PlayerID
+--	local playerID	= event.PlayerID
 	local itemID	= event.ItemEntityIndex
 	local item		= EntIndexToHScript( itemID )
 	local hero		= EntIndexToHScript( event.HeroEntityIndex )
+	local playerID	= DotaHS_HeroEntityToPlayerID( hero )
 
 	self:_Log( "Player " .. playerID .. " picked up " .. event.itemname )
 
@@ -560,6 +789,8 @@ function ItemManager:OnItemPickedUp( event )
 			self._vItemMap[item:entindex()] = nil
 			item:Kill()
 
+			self:_UpdateNetworth( playerID )
+
 			-- Fire event
 			local eventData = {
 				["itemID"]		= itemStackTo:entindex(),
@@ -574,17 +805,7 @@ function ItemManager:OnItemPickedUp( event )
 	end
 
 	-- Check inventory space
-	local numBackpackSlots = 15
-	local emptySlotName
-
-	for i = 0, numBackpackSlots-1 do
-		local slotName = "slot_backpack_" .. i
-		if inventory[slotName] == nil then
-			emptySlotName = slotName
-			break
-		end
-	end
-
+	local emptySlotName = self:_FindEmptyBackpackSlot( playerID )
 	if emptySlotName == nil then
 		self:_Log( "Player " .. playerID .. " has no inventory space" )
 		hero:DropItemAtPositionImmediate( item, hero:GetAbsOrigin() )
@@ -599,6 +820,9 @@ function ItemManager:OnItemPickedUp( event )
 --	hero:RemoveItem( item )	-- This func removes also the entity of item
 	hero:DropItemAtPositionImmediate( item, Vector( 999999, 999999, 999999 ) )
 		-- Should we make invisible this item? SetScale( 1e-5 )?
+
+	-- Update NETWORTH
+	self:_UpdateNetworth( playerID )
 
 	-- Fire event to clients
 	local eventData = {
@@ -633,6 +857,14 @@ function ItemManager:OnItemUsed( event )
 end
 
 --------------------------------------------------------------------------------
+function ItemManager:OnUsedAbility( event )
+	if not vConsumableSet[event.abilityname] then
+		return false
+	end
+	self:_Log( "Player[" .. ( event.PlayerID - 1 ) .."] used ability. name = " .. event.abilityname )
+end
+
+--------------------------------------------------------------------------------
 function ItemManager:OnEntityKilled( event )
 
 	local killedUnit = EntIndexToHScript( event.entindex_killed )
@@ -643,7 +875,13 @@ function ItemManager:OnEntityKilled( event )
 		return
 	end
 
-	self._vPlayerKilled[killedUnit:GetPlayerID()] = true
+	local playerID = DotaHS_HeroEntityToPlayerID(killedUnit)
+	if not playerID then
+		self:_Log( "PlayerID not found. UnitName = " .. killedUnit:GetUnitName() )
+		return
+	end
+	self._vPlayerKilled[playerID] = true
+	self:_Log( "Player[" .. playerID .. "] has been added to vPlayerKilled" )
 
 end
 
@@ -669,12 +907,111 @@ function ItemManager:_SerializeItemProperties( properties )
 	return str
 end
 
+--------------------------------------------------------------------------------
+function ItemManager:_isSlotFor( slotType, slotName )
+	return ( string.find( slotName, slotType ) ~= nil )
+end
+
 function ItemManager:_isEquipmentSlot( slotName )
-	return ( string.find( slotName, "slot_equipment" ) ~= nil )
+	return self:_isSlotFor( "slot_equipment", slotName )
 end
 
 function ItemManager:_isConsumableSlot( slotName )
-	return ( string.find( slotName, "slot_consumable" ) ~= nil )
+	return self:_isSlotFor( "slot_consumable", slotName )
+end
+
+function ItemManager:_isBackpackSlot( slotName )
+	return self:_isSlotFor( "slot_backpack", slotName )
+end
+
+--------------------------------------------------------------------------------
+function ItemManager:_ForEachSlotFor( slotType, numSlots, playerID, func --[[ function ( slotName, itemOrNil ) ]] )
+	local inventory = self._vPlayerHSInventoryMap[playerID]
+	for i=0, numSlots-1 do
+		local slotName = slotType .. "_" .. i
+		func( slotName, self._vItemMap[inventory[slotName]] )
+	end
+end
+
+function ItemManager:_ForEachEquipmentSlot( playerID, func )
+	self:_ForEachSlotFor( "slot_equipment", INVENTORY_NUM_EQUIPMENT_SLOTS, playerID, func )
+end
+
+function ItemManager:_ForEachConsumableSlot( playerID, func )
+	self:_ForEachSlotFor( "slot_consumable", INVENTORY_NUM_CONSUMABLE_SLOTS, playerID, func )
+end
+
+function ItemManager:_ForEachBackpackSlot( playerID, func )
+	self:_ForEachSlotFor( "slot_backpack", INVENTORY_NUM_BACKPACK_SLOTS, playerID, func )
+end
+
+--------------------------------------------------------------------------------
+function ItemManager:_FindEmptySlotFor( slotType, numSlots, playerID )
+	local inventory = self._vPlayerHSInventoryMap[playerID]
+	for i=0, numSlots-1 do
+		local slotName = slotType .. "_" .. i
+		if inventory[slotName] == nil then
+			return slotName
+		end
+	end
+	return nil
+end
+
+function ItemManager:_FindEmptyEquipmentSlot( playerID )
+	return self:_FindEmptySlotFor( "slot_equipment", INVENTORY_NUM_EQUIPMENT_SLOTS, playerID )
+end
+
+function ItemManager:_FindEmptyConsumableSlot( playerID )
+	return self:_FindEmptySlotFor( "slot_consumable", INVENTORY_NUM_CONSUMABLE_SLOTS, playerID )
+end
+
+function ItemManager:_FindEmptyBackpackSlot( playerID )
+	return self:_FindEmptySlotFor( "slot_backpack", INVENTORY_NUM_BACKPACK_SLOTS, playerID )
+end
+
+--------------------------------------------------------------------------------
+
+-- REF: http://dota2.gamepedia.com/Gold_efficiency
+local vPropertyToGoldRatioMap = {
+	damage	= 50,
+	str		= 88.85,	-- 138.85 for STR
+	agi		= 45.55,	-- 95.55  for AGI
+	int		= 57,		-- 107    for INT
+	as		= 33.3,
+	armor	= 87.5,
+	mr		= 36.6,
+	hp		= 4.4,
+	mana	= 4,
+	hpreg	= 175,
+	manareg	= 6.5,
+	ms		= 9,
+}
+
+function ItemManager:_EsitimateGoldEfficiency( item, coefficients )
+	local estimateFromTable = function ( properties )
+		local total = 0
+		for k,v in pairs(properties) do
+			local propertyKey = string.lower(k)
+			local gold
+			if vPropertyToGoldRatioMap[propertyKey] then
+				gold = vPropertyToGoldRatioMap[propertyKey] * v
+
+				if coefficients then
+					gold = gold * coefficients[propertyKey]
+				end
+			else
+				self:_Log( "GoldEfficiency - \"" .. propertyKey .. "\" property not found." )
+				gold = 0
+			end
+			total = total + gold
+		end
+		return total
+	end
+
+	local base			= estimateFromTable( item.DotaHS_BaseProperties )
+	local additional	= estimateFromTable( item.DotaHS_AdditionalProperties )
+
+	return base + additional
 end
 
 
